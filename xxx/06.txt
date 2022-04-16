@@ -1,0 +1,51 @@
+1. Feature Tests
+
+    Данные тесты предназначены для эмуляции Request
+    Можно создать тестовую базу данных (в docker-compose, например), в файле phpunit.xml указать соответсвующие конфиги БД.
+    Чтобы применять миграции для тестовой БД, можно:
+        - использовать трейт RefreshMigration
+
+    Можно создать отдельный файл .env-testing со всеми нужными конфигами и запускать миграции так:
+        php artisan migrate --env=testing
+
+2. Добавление верификации телефона
+    2.1. Создаем миграю с 4 полями
+    2.2. При регистрации $user->phone = null
+        Во время редактирования пользователем своего профиля (изменение телефона) - сравниваем новый телефон и старый
+        if ($user->phone !== $oldPhone)
+            $user->cancelPhoneVerification();
+
+        -----------
+
+3. Оборачивание сервисов (декорирование)
+
+interface SmsSender
+{
+    public function send($number, $text): void;
+}
+
+class MtsRu implements SmsSender
+{
+    public function send($number, $text) {
+        // logic
+    }
+}
+
+Если нужно логировать, то можно сделать так:
+
+class LoggedSms implements SmsSender
+{
+    private $sender;
+
+    public function __construct(SmsSender $sender) {
+        $this->sender = $sender;
+    }
+
+    public function send($number,$text) {
+        Log::info(...);
+        $this->sender->send($number,$text);
+    }
+}
+
+$sms = new LoggedSms(new MtsRu())
+$sms->send(...,...);

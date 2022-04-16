@@ -1,0 +1,11 @@
+--------------- Laravel Mix ------------------
+
+Создание отдельной папки для стилей и скриптов в public. Например, public/assets
+В webpack.mix.js сделать перенаправление, указать setPublicPath и setResourceRoot, а также добавить версионность CSS  b
+    JS файлов.
+
+    mix.setPublicPath('public/assets')
+        .setResourceRoot('assets')
+        .js('resources/js/app.js', 'js')
+        .postCss('resources/css/app.css', 'css')
+        .version();
