@@ -1,0 +1,14 @@
+1. ЧПУ в роутах
+    Переопределение метода в модели getRouteKey(), getRouteKeyName()
+Для составных slug в RouteServiceProvider парсим маршрут
+    (сложно)
+
+ 2. Кеширование адресов
+    Тегирование кеша (добавление тегов)
+        Cache::tags()->rememberForever()
+        Cache:tags('tag_name')->flush()
+
+3. Функционал *Избранное*
+    Создаем таблицу advert_favorites (many to many), где первичный ключ PK составной: user_id.advert_id;
+
+4. Уведомление пользователей об изменении цены на избранные объявления
