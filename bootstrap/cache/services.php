@@ -40,6 +40,7 @@
     36 => 'App\\Providers\\RouteServiceProvider',
     37 => 'App\\Providers\\SmsServiceProvider',
     38 => 'App\\Providers\\CacheServiceProvider',
+    39 => 'App\\Providers\\ElasticSearchServiceProvider',
   ),
   'eager' => 
   array (
@@ -66,6 +67,7 @@
     20 => 'App\\Providers\\RouteServiceProvider',
     21 => 'App\\Providers\\SmsServiceProvider',
     22 => 'App\\Providers\\CacheServiceProvider',
+    23 => 'App\\Providers\\ElasticSearchServiceProvider',
   ),
   'deferred' => 
   array (

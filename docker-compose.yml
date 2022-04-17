@@ -24,11 +24,13 @@ services:
         depends_on:
             -   mysql
             -   redis
+            -   elasticserach
         environment:
             -   DB_PORT=3306
             -   DB_HOST=mysql
             -   REDIS_PORT=6379
             -   REDIS_HOST=redis
+            -   ELASTICSEARCH_HOST=elasticsearch:9200
 
     mysql:
         image: mysql:5.7.16
@@ -62,6 +64,21 @@ services:
         image: redis:3.0
         ports:
         -   63791:6379
+
+    elasticserach:
+        image: docker.elastic.co/elasticsearch/elasticsearch:8.1.2
+        environment:
+            - bootstrap.memory_lock=true
+            - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
+        ulimits:
+            memlock:
+                soft: -1
+                hard: -1
+        mem_limit: 1073741824
+        volumes:
+        -   ./storage/docker/elasticsearch:/usr/share/elasticsearch/data
+        ports:
+        -   9201:9200
 
 
 
