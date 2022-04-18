@@ -65,6 +65,7 @@
                 <div class="card-body pb-2">
                     @foreach($category->allAttributes() as $attribute)
 
+
                         <div class="form-group">
                             <label for="attribute_{{ $attribute->id}}"
                                    class="col-form-label">{{ $attribute->name }}</label>
@@ -72,7 +73,7 @@
                                 <select name="attributes_[{{ $attribute->id }}]" id="attribute_{{ $attribute->id }}"
                                         class="form-control {{ $errors->has('attributes.' . $attribute->id) ? ' is-invalid' : '' }}">
                                     <option value=""></option>
-                                    @foreach($attribute->typesList as $type)
+                                    @foreach($attribute->typesList() as $type)
                                         <option
                                             value="{{ $type }}" {{ $type === old('$attributes.' . $attribute->id) ? ' selected' : '' }}>
                                             {{ $type }}

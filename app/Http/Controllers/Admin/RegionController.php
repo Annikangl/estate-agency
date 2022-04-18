@@ -65,8 +65,8 @@ class RegionController extends Controller
     public function update(Request $request, Region $region)
     {
         $request->validate([
-            'name' => 'required|string|max:255|unique:regions,name' . $region->id . ',id,parent_id' .$region->parent_id,
-            'slug' => 'required|string|max:255|unique:regions,slug' . $region->id . ',id,parent_id' .$region->parent_id,
+            'name' => 'required|string|max:255|unique:regions,name,' . $region->id . ',id,parent_id,' . $region->parent_id,
+            'slug' => 'required|string|max:255|unique:regions,slug,' . $region->id . ',id,parent_id,' . $region->parent_id,
         ]);
 
         $region->update($request->only(['name', 'slug']));

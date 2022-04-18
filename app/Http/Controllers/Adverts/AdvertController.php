@@ -40,9 +40,9 @@ class AdvertController extends Controller
     public function show(Advert $advert)
     {
         $user = \Auth::user();
-        if (!\Gate::allows('show-advert', $advert)) {
-            abort(403);
-        }
+//        if (!\Gate::allows('show-advert', $advert)) {
+//            abort(403);
+//        }
 
         return view('adverts.show', compact('advert','user'));
     }

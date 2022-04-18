@@ -49,7 +49,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'cabinet', 'as' => 'cabinet.']
     Route::delete('favorites/{advert}', [FavoriteController::class, 'remove'])->name('favorites.remove');
 
     Route::group(['prefix' => 'adverts', 'as' => 'adverts.','middleware' => \App\Http\Middleware\FilledProfile::class], function () {
-        Route::get('/',[AdvertController::class,'index'])->name('index');
+        Route::get('/',[\App\Http\Controllers\Cabinet\Advert\AdvertController::class,'index'])->name('index');
         Route::get('/create', [CreateController::class,'category'])->name('create');
         Route::get('/create/region/{category}/{region?}', [CreateController::class,'region'])->name('create.region');
         Route::get('/create/advert/{category}/{region?}', [CreateController::class,'advert'])->name('create.advert');

@@ -29,7 +29,7 @@ class AttributesController extends Controller
             'sort' => $request['sort']
         ]);
 
-        return redirect()->route('admin.Advert.categories.attributes.show', [$category, $attribute]);
+        return redirect()->route('admin.advert.categories.attributes.show', [$category, $attribute]);
     }
 
     public function show(Category $category, Attribute $attribute)

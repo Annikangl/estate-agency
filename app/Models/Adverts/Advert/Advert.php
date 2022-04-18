@@ -84,7 +84,7 @@ class Advert extends Model
 
     public function moderate(Carbon $date): void
     {
-        if ($this->status !== self::STATUS_MODERATION) {
+        if ($this->status === self::STATUS_MODERATION) {
             throw new \DomainException('Объявление нельзя повторно отправить на модерацию!');
         }
 

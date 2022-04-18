@@ -104,10 +104,12 @@ class AdvertController extends Controller
         return view('admin.adverts.adverts.reject', compact('advert'));
     }
 
-    public function reject($id, RejectRequest $request): void
+    public function reject($id, RejectRequest $request)
     {
         $advert = $this->getAdvert($id);
         $advert->reject($request['reason']);
+
+        return redirect()->route('adverts.show', $advert);
     }
 
     public function expire(Advert $advert): void
