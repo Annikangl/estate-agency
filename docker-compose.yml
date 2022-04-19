@@ -66,7 +66,7 @@ services:
         -   63791:6379
 
     elasticserach:
-        image: docker.elastic.co/elasticsearch/elasticsearch:8.1.2
+        image: docker.elastic.co/elasticsearch/elasticsearch:6.2.4
         environment:
             - bootstrap.memory_lock=true
             - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
@@ -74,7 +74,7 @@ services:
             memlock:
                 soft: -1
                 hard: -1
-        mem_limit: 1073741824
+#        mem_limit: 1073741824
         volumes:
         -   ./storage/docker/elasticsearch:/usr/share/elasticsearch/data
         ports:

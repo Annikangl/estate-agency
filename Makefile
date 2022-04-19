@@ -8,7 +8,7 @@ docker-build: docker-memory
 	docker-compose up --build -d
 
 docker-memory:
-	sysctl -w vm.max_map_count=262144
+	sudo sysctl -w vm.max_map_count=262144
 
 test:
 	docker-compose exec php-fpm vendor/bin/phpunit --colors=always
