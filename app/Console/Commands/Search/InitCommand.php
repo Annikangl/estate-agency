@@ -113,34 +113,6 @@ class InitCommand extends Command
             ],
         ]);
 
-        foreach (Advert::active()->orderBy('id')->cursor() as $advert) {
-            $regions = [];
-
-            if ($region = $advert->region) {
-                do {
-                    $regions[] = $region->id;
-                } while ($region = $region->parent);
-            }
-
-            $this->client->index([
-                'index' => 'agency',
-                'type' => 'adverts',
-                'id' => $advert->id,
-                'body' => [
-                    'id' => $advert->id,
-                    'published_at' => $advert->published_at ? $advert->published_at->format(DATE_ATOM) : null,
-                    'title' => $advert->title,
-                    'content' => $advert->content,
-                    'price' => $advert->price,
-                    'status' => $advert->status,
-                    'categories' => array_merge(
-                        [$advert->category->id],
-                        $advert->category->descendants()->pluck('id')->toArray()),
-                    'regions' => $regions
-                ]
-            ]);
-        }
-
-        return true;
+        return 0;
     }
 }
