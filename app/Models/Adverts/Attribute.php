@@ -36,7 +36,7 @@ class Attribute extends Model
 
     public $timestamps = false;
 
-    public  function typesList(): array
+    public function typesList(): array
     {
         return [
             self::TYPE_STRING,

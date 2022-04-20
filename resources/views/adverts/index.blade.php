@@ -1,5 +1,8 @@
 @extends('layouts.app')
 
+@section('search')
+    @include('layouts.partials.search', ['category' => $category, 'action' => '?'])
+@endsection
 @section('content')
     <div class="container">
 
@@ -21,7 +24,7 @@
                             <ul class="list-unstyled">
                                 @foreach($chunk as $current)
                                     <li>
-                                        <a href="{{ route('adverts.index', [$region, $current]) }}">{{ $current->name }}</a>
+                                        <a href="{{ route('adverts.index', [$current, $region]) }}">{{ $current->name }}</a>
                                         ({{ $categoryCount[$current->id] ?? 0 }})
                                     </li>
                                 @endforeach
@@ -49,7 +52,7 @@
                             <ul class="list-unstyled">
                                 @foreach($chunk as $current)
                                     <li>
-                                        <a href="{{ route('adverts.index', [$region, $current]) }}">{{ $current->name }}</a>
+                                        <a href="{{ route('adverts.index', [$current, $category]) }}">{{ $current->name }}</a>
                                         ({{ $regionCount[$current->id] ?? 0 }})
                                     </li>
                                 @endforeach
