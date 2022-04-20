@@ -15,6 +15,7 @@ class ElasticSearchServiceProvider extends ServiceProvider
     {
         $this->app->singleton(Client::class, function (Application $application){
             $config = $application->make('config')->get('elasticsearch');
+
             return ClientBuilder::create()
                 ->setHosts($config['hosts'])
                 ->setRetries($config['retries'])

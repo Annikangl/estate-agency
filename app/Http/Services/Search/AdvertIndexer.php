@@ -5,6 +5,7 @@ namespace App\Http\Services\Search;
 
 
 use App\Models\Adverts\Advert\Advert;
+use App\Models\Adverts\Advert\Value;
 use Elasticsearch\Client;
 
 class AdvertIndexer
@@ -54,7 +55,14 @@ class AdvertIndexer
                 'categories' => array_merge(
                     [$advert->category->id],
                     $advert->category->descendants()->pluck('id')->toArray()),
-                'regions' => $regions
+                'regions' => $regions ?: [0],
+                'values' => array_map(function (Value $value) {
+                    return [
+                        'attribute' => $value->attribute_id,
+                        'value_string' => (string)$value->value,
+                        'value_int' => (int)$value->value,
+                    ];
+                }, $advert->values()->getModels()),
             ]
         ]);
     }

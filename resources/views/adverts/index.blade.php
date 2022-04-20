@@ -5,63 +5,64 @@
 
     <p><a href="{{ route('cabinet.adverts.create') }}" class="btn btn-success">Создать объявление</a></p>
 
-{{--    @if ($categories)--}}
-{{--        <div class="card card-default mb-3">--}}
-{{--            <div class="card-header">--}}
-{{--                @if ($category)--}}
-{{--                    Категория: {{ $category->name }}--}}
-{{--                @else--}}
-{{--                    Категории--}}
-{{--                @endif--}}
-{{--            </div>--}}
-{{--            <div class="card-body pb0">--}}
-{{--                <div class="row">--}}
-{{--                    @foreach(array_chunk($categories,3) as $chunk)--}}
-{{--                        <div class="col-md-3">--}}
-{{--                            <ul class="list-unstyled">--}}
-{{--                                @foreach($chunk as $current)--}}
-{{--                                    <li>--}}
-{{--                                        <a href="{{ route('adverts.index', [$region, $current]) }}">{{ $current->name }}</a>--}}
-{{--                                    </li>--}}
-{{--                                @endforeach--}}
-{{--                            </ul>--}}
-{{--                        </div>--}}
-{{--                    @endforeach--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--        </div>--}}
-{{--    @endif--}}
+    @if ($categories)
+        <div class="card card-default mb-3">
+            <div class="card-header">
+                @if ($category)
+                    Категория: {{ $category->name }}
+                @else
+                    Категории
+                @endif
+            </div>
+            <div class="card-body pb0">
+                <div class="row">
+                    @foreach(array_chunk($categories,3) as $chunk)
+                        <div class="col-md-3">
+                            <ul class="list-unstyled">
+                                @foreach($chunk as $current)
+                                    <li>
+                                        <a href="{{ route('adverts.index', [$region, $current]) }}">{{ $current->name }}</a>
+                                        ({{ $categoryCount[$current->id] ?? 0 }})
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    @endif
 
-{{--    @if ($regions)--}}
-{{--        <div class="card card-default mb-3">--}}
-{{--            <div class="card-header">--}}
-{{--                @if ($region)--}}
-{{--                    Регион: {{ $region->name }}--}}
-{{--                @else--}}
-{{--                    Регионы--}}
-{{--                @endif--}}
-{{--            </div>--}}
-{{--            <div class="card-body pb0">--}}
-{{--                <div class="row">--}}
-{{--                    @foreach(array_chunk($regions,3) as $chunk)--}}
-{{--                        <div class="col-md-3">--}}
-{{--                            <ul class="list-unstyled">--}}
-{{--                                @foreach($chunk as $current)--}}
-{{--                                    <li>--}}
-{{--                                        <a href="{{ route('adverts.index', [$region, $current]) }}">{{ $current->name }}</a>--}}
-{{--                                    </li>--}}
-{{--                                @endforeach--}}
-{{--                            </ul>--}}
-{{--                        </div>--}}
-{{--                    @endforeach--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--        </div>--}}
-{{--    @endif--}}
+    @if ($regions)
+        <div class="card card-default mb-3">
+            <div class="card-header">
+                @if ($region)
+                    Регион: {{ $region->name }}
+                @else
+                    Регионы
+                @endif
+            </div>
+            <div class="card-body pb0">
+                <div class="row">
+                    @foreach(array_chunk($regions,3) as $chunk)
+                        <div class="col-md-3">
+                            <ul class="list-unstyled">
+                                @foreach($chunk as $current)
+                                    <li>
+                                        <a href="{{ route('adverts.index', [$region, $current]) }}">{{ $current->name }}</a>
+                                        ({{ $regionCount[$current->id] ?? 0 }})
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    @endif
 
         <section id="adverts-list-section" style="background-color: #eee;">
             <div class="container py-5">
-
                 @foreach($adverts as $advert)
                     <div class="row justify-content-center mb-3">
                         <div class="col-md-12 col-xl-10">
