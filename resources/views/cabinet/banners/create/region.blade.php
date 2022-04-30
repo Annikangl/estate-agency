@@ -2,6 +2,7 @@
 
 @section('content')
     <div class="container">
+        @include('cabinet._nav')
         @if ($region)
             <p>
                 <a href="{{ route('cabinet.adverts.create.advert', [$category, $region]) }}" class="btn btn-primary">

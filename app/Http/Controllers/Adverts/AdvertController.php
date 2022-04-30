@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Cache;
 
 class AdvertController extends Controller
 {
-    private $search;
+    private SearchService $search;
 
     public function __construct(SearchService $searchService)
     {

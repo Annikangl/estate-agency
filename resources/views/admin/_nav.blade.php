@@ -32,4 +32,12 @@
             </a>
         </li>
     @endcan
+    @can('manage-banners')
+        <li class="nav-item">
+            <a href="{{ route('admin.banners.index') }}"
+               class="nav-link  @if (Route::is('admin.banners.*')) active @endif">
+                Реклама
+            </a>
+        </li>
+    @endcan
 </ul>

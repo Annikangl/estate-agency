@@ -7,6 +7,7 @@ use App\Http\Requests\Adverts\Advert\AdvertAttributesRequest;
 use App\Http\Requests\Adverts\CreateAdvertRequest;
 use App\Http\Requests\Adverts\PhotosRequest;
 use App\Http\Requests\Adverts\RejectRequest;
+use App\Http\Services\Search\AdvertIndexer;
 use App\Models\Adverts\Advert\Advert;
 use App\Models\Adverts\Category;
 use App\Models\Region;
@@ -15,6 +16,13 @@ use Carbon\Carbon;
 
 class AdvertService
 {
+    private AdvertIndexer $indexer;
+
+    public function __construct(AdvertIndexer $advertIndexer)
+    {
+        $this->indexer = $advertIndexer;
+    }
+
     public function create($userId, $categoryId, $regionId, CreateAdvertRequest $request)
     {
         /** @var User $user */
@@ -118,17 +126,20 @@ class AdvertService
     {
         $advert = $this->getAdvert($id);
         $advert->moderate(Carbon::now());
+        $this->indexer->index($advert);
     }
 
     public function reject(int $id, RejectRequest $request)
     {
         $advert = $this->getAdvert($id);
         $advert->reject($request['reason']);
+        $this->indexer->remove($advert);
     }
 
     public function expire(Advert $advert): void
     {
         $advert->expirre();
+        $this->indexer->remove($advert);
     }
 
     public function remove(int $id): void
@@ -136,6 +147,7 @@ class AdvertService
         $advert = $this->getAdvert($id);
         $advert->photos()->delete();
         $advert->delete();
+        $this->indexer->remove($advert);
     }
 
     private function getAdvert(int $id): Advert

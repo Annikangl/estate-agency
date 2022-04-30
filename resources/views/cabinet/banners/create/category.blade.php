@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-        @include('cabinet.adverts._nav')
+        @include('cabinet._nav')
 
         <p>Выберите категорию:</p>
 

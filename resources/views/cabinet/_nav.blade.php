@@ -11,5 +11,8 @@
     <li class="nav-item">
         <a href="{{ route('cabinet.favorites.index') }}" class="nav-link  @if (Route::is('cabinet.favorites.index')) active @endif">Избранное</a>
     </li>
+    <li class="nav-item">
+        <a href="{{ route('cabinet.banners.index') }}" class="nav-link  @if (Route::is('cabinet.banners.index')) active @endif">Реклама</a>
+    </li>
 </ul>
 
