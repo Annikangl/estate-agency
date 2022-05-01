@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Banners\CreateRequest;
 use App\Http\Services\Banner\BannerService;
 use App\Models\Adverts\Category;
+use App\Models\Banners\Banner;
 use App\Models\Region;
 use Illuminate\Http\Request;
 

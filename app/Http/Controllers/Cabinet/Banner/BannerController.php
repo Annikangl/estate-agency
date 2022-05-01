@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Cabinet\Banner;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Banners\EditRequest;
 use App\Http\Services\Banner\BannerService;
+use App\Models\Banners\Banner;
 use Illuminate\Http\Request;
 
 class BannerController extends Controller
@@ -18,7 +19,7 @@ class BannerController extends Controller
 
     public function index()
     {
-        $banners = Banner::forUser(\Auth::user())->orderByDesc('id')->paginate(6);
+        $banners = Banner::ForUser(\Auth::user())->orderByDesc('id')->paginate(6);
 
         return view('cabinet.banners.index', compact('banners'));
     }
@@ -54,6 +55,30 @@ class BannerController extends Controller
     public function send(Banner $banner)
     {
 
+    }
+
+    public function order(Banner $banner)
+    {
+        $this->checkAccess($banner);
+
+        try {
+            $banner = $this->bannerService->order($banner->id);
+        } catch (\DomainException $exception) {
+            return back()->with('error', $exception->getMessage());
+        }
+
+        return redirect()->route('cabinet.banners.show', $banner);
+    }
+
+    public function destroy(Banner $banner)
+    {
+        try {
+            $this->bannerService->removeByOwner($banner->id);
+        } catch (\DomainException $exception) {
+            return back()->with('error', $exception->getMessage());
+        }
+
+        return view('cabinet.banners.index', $banner);
     }
 
     private function checkAccess(Banner $banner): void

@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Banners\EditRequest;
 use App\Http\Requests\Banners\RejectRequest;
 use App\Http\Services\Banner\BannerService;
+use App\Models\Banners\Banner;
 
 class BannerController extends Controller
 {
