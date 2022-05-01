@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Cabinet\Banner;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Banners\EditRequest;
+use App\Http\Requests\Banners\FileRequest;
 use App\Http\Services\Banner\BannerService;
 use App\Models\Banners\Banner;
 use Illuminate\Http\Request;
@@ -19,7 +20,7 @@ class BannerController extends Controller
 
     public function index()
     {
-        $banners = Banner::ForUser(\Auth::user())->orderByDesc('id')->paginate(6);
+        $banners = Banner::forUser(\Auth::user())->orderByDesc('id')->paginate(6);
 
         return view('cabinet.banners.index', compact('banners'));
     }
@@ -52,9 +53,52 @@ class BannerController extends Controller
         return redirect()->route('cabinet.banners.show', compact('banner'));
     }
 
+    public function fileForm(Banner $banner)
+    {
+        $this->checkAccess($banner);
+
+        if (!$banner->canBeChanged()) {
+            return redirect()->route('cabinet.banners.show', $banner)->with('error', 'Не доступен для редактирования ');
+        }
+
+        $formats = Banner::formatsList();
+        return view('cabinet.banners.file', compact('banner', 'formats'));
+    }
+
+    public function file(FileRequest $request, Banner $banner)
+    {
+        $this->checkAccess($banner);
+        try {
+            $this->bannerService->changeFile($banner->id, $request);
+        } catch (\DomainException $exception) {
+            return back()->with('error', $exception->getMessage());
+        }
+
+        return redirect()->route('cabinet.banners.show', compact('banner'));
+    }
+
     public function send(Banner $banner)
     {
+        $this->checkAccess($banner);
+        try {
+            $this->bannerService->sendToModeration($banner->id);
+        } catch (\DomainException $exception) {
+            return back()->with('error', $exception->getMessage());
+        }
 
+        return redirect()->route('cabinet.banners.show', $banner);
+    }
+
+    public function cancel(Banner $banner)
+    {
+        $this->checkAccess($banner);
+        try {
+            $this->bannerService->cancelModeration($banner->id);
+        } catch (\DomainException $exception) {
+            return back()->with('error', $exception->getMessage());
+        }
+
+        return redirect()->route('cabinet.banners.show', $banner);
     }
 
     public function order(Banner $banner)

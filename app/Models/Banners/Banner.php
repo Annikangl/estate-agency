@@ -38,48 +38,145 @@ class Banner extends Model
 {
     use HasFactory;
 
-    const STATUS_DRAFT = 'Черновик';
+    public const STATUS_DRAFT = 'Черновик';
+    public const STATUS_MODERATION = 'На модерации';
+    public const STATUS_MODERATED = 'Одобрен';
+    public const STATUS_ORDERED = 'Заказан на оплату';
+    public const STATUS_ACTIVE = 'Активен';
+    public const STATUS_CLOSED = 'Закрыт';
 
-    public static function scopeForUser(?\App\Models\User $user)
+    protected $table = 'banner_banners';
+
+    protected $guarded = [
+        'id'
+    ];
+
+    protected $casts = [
+        'published_at' => 'datetime'
+    ];
+
+    public static function statusesList(): array
     {
+        return [
+            self::STATUS_DRAFT => 'Черновик',
+            self::STATUS_MODERATION => 'На модерации',
+            self::STATUS_MODERATED => 'Одобрен',
+            self::STATUS_ORDERED => 'Оплачен',
+            self::STATUS_ACTIVE => 'Активирован',
+            self::STATUS_CLOSED => 'Закрыт'
+        ];
     }
 
     public static function formatsList(): array
     {
-        return [];
+        return [
+            '240x400'
+        ];
+    }
+
+    public function sendToModeration(): void
+    {
+        if (!$this->isDraft()) {
+            throw new \DomainException('Это не черновик');
+        }
+
+        $this->update([
+            'status' => self::STATUS_MODERATION
+        ]);
+    }
+
+    public function cancelModeration(): void
+    {
+        if (!$this->isOnModeration()) {
+            throw new \DomainException('Баннер уже на проверке');
+        }
+
+        $this->update([
+            'status' => self::STATUS_DRAFT
+        ]);
+    }
+
+    public function moderate(): void
+    {
+        if (!$this->isOnModeration()) {
+            throw new \DomainException('Баннер уже на проверке');
+        }
+
+        $this->update([
+            'status' => self::STATUS_MODERATED
+        ]);
+    }
+
+    public function reject($reason): void
+    {
+        $this->update([
+            'status' => self::STATUS_DRAFT,
+            'reject_reason' => $reason
+        ]);
+    }
+
+    public function order(int $cost): void
+    {
+        if (!$this->isModerated()) {
+            throw new \DomainException('Баннер еще не одобрен');
+        }
+
+        $this->update([
+            'cost' => $cost,
+            'status' => self::STATUS_ORDERED
+        ]);
+    }
+
+    public function pay(\Carbon\Carbon $date)
+    {
+        if (!$this->isModerated()) {
+            throw new \DomainException('Баннер еще не одобрен');
+        }
+
+        $this->update([
+            'published_at' => $date,
+            'status' => self::STATUS_ACTIVE
+        ]);
+    }
+
+    public function getWidth(): int
+    {
+        return explode('x', $this->format)[0];
+    }
+
+    public function getHeight(): int
+    {
+        return explode('x', $this->format)[1];
     }
 
     public function canBeChanged(): bool
     {
+        return $this->isDraft();
     }
 
-    public function sendToModeration()
+    public function canBeRemoved(): bool
     {
+        return $this->isActive();
     }
 
-    public function cancelModeration()
+    public function isDraft(): bool
     {
-
+        return self::STATUS_DRAFT === $this->status;
     }
 
-    public function pay(\Carbon\Carbon $now)
+    public function isActive(): bool
     {
-
+        return self::STATUS_ACTIVE === $this->status;
     }
 
-    public function moderate()
+    public function isOnModeration(): bool
     {
-
+        return self::STATUS_MODERATION === $this->status;
     }
 
-    public function reject()
+    public function isModerated(): bool
     {
-
-    }
-
-    public function order($cost)
-    {
-
+        return self::STATUS_MODERATED === $this->status;
     }
 
     public function user()
@@ -95,5 +192,15 @@ class Banner extends Model
     public function region()
     {
         return $this->belongsTo(Region::class,'region_id','id');
+    }
+
+    public static function scopeForUser(Builder $query, User $user): Builder
+    {
+        return $query->where('user_id', $user->id);
+    }
+
+    public static function scopeActive(Builder $query): Builder
+    {
+        return $query->where('status', self::STATUS_ACTIVE);
     }
 }

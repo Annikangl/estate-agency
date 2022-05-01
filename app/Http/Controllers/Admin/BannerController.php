@@ -9,17 +9,18 @@ use App\Http\Requests\Banners\EditRequest;
 use App\Http\Requests\Banners\RejectRequest;
 use App\Http\Services\Banner\BannerService;
 use App\Models\Banners\Banner;
+use Illuminate\Http\Request;
 
 class BannerController extends Controller
 {
-    private $bannerService;
+    private BannerService $bannerService;
 
     public function __construct(BannerService $bannerService)
     {
         $this->bannerService = $bannerService;
     }
 
-    public function index(\Request $request)
+    public function index(Request $request)
     {
         $query = Banner::orderByDesc('updated_at');
 

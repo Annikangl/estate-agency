@@ -6,6 +6,7 @@ namespace App\Http\Services\Banner;
 
 use App\Http\Requests\Banners\CreateRequest;
 use App\Http\Requests\Banners\EditRequest;
+use App\Http\Requests\Banners\FileRequest;
 use App\Http\Requests\Banners\RejectRequest;
 use App\Models\Adverts\Category;
 use App\Models\Banners\Banner;
@@ -23,7 +24,6 @@ class BannerService
         $this->calculator = $calculator;
     }
 
-    /** @noinspection PhpUnhandledExceptionInspection */
     public function create(User $user, Category $category, ?Region $region, CreateRequest $request): Banner
     {
         $banner = Banner::make([
@@ -55,7 +55,7 @@ class BannerService
         $banner->update([
             'name' => $request['name'],
             'limit' => $request['limit'],
-            'url' => $request['url'],
+            'url' => $request['url']
         ]);
     }
 
@@ -66,7 +66,7 @@ class BannerService
         $banner->update([
             'name' => $request['name'],
             'limit' => $request['limit'],
-            'url' => $request['url'],
+            'url' => $request['url']
         ]);
     }
 
@@ -93,6 +93,7 @@ class BannerService
         $banner = $this->getBanner($id);
         $banner->reject();
     }
+
 
     public function order($id): Banner
     {
@@ -121,7 +122,9 @@ class BannerService
 
     public function removeByAdmin(mixed $id)
     {
-
+        $banner = $this->getBanner($id);
+        $banner->delete();
+        File::delete($banner->file);
     }
 
     public function removeByOwner(int $id)
@@ -134,5 +137,15 @@ class BannerService
 
         $banner->delete();
         File::delete($banner->file);
+    }
+
+    public function changeFile(int $id, FileRequest $request)
+    {
+        $banner = $this->getBanner($id);
+
+        $banner->update([
+            'format' => $request['format'],
+            'file' => $request->file('file')->store('banners','public')
+        ]);
     }
 }

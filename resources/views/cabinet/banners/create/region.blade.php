@@ -3,25 +3,25 @@
 @section('content')
     <div class="container">
         @include('cabinet._nav')
+
         @if ($region)
             <p>
-                <a href="{{ route('cabinet.adverts.create.advert', [$category, $region]) }}" class="btn btn-primary">
-                    Создать объявление для региона {{ $region->name }}
-                </a>
+                <a href="{{ route('cabinet.banners.create.banner', [$category, $region]) }}" class="btn btn-success">Add
+                    Advert for {{ $region->name }}</a>
             </p>
         @else
             <p>
-                <a href="{{ route('cabinet.adverts.create.advert', [$category]) }}" class="btn btn-primary">
-                    Создать объявление для всей области
-                </a>
+                <a href="{{ route('cabinet.banners.create.banner', $category) }}" class="btn btn-success">Add Advert
+                    for all regions</a>
             </p>
         @endif
 
-        <p>Или выберите вложенный регион</p>
+        <p>Or choose nested region:</p>
+
         <ul>
-            @foreach($regions as $current)
+            @foreach ($regions as $current)
                 <li>
-                    <a href="{{ route('cabinet.adverts.create.region', [$category, $current]) }}">{{ $current->name }}</a>
+                    <a href="{{ route('cabinet.banners.create.region', [$category, $current]) }}">{{ $current->name }}</a>
                 </li>
             @endforeach
         </ul>

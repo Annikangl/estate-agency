@@ -4,9 +4,10 @@ namespace App\Http\Requests\Banners;
 
 use App\Models\Banners\Banner;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
-class CreateRequest extends FormRequest
+class FileRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -31,9 +32,6 @@ class CreateRequest extends FormRequest
         }
 
         return [
-            'name' => 'required|string',
-            'limit' => 'required|integer',
-            'url' => 'required|url',
             'format' => ['required', 'string', Rule::in(Banner::formatsList())],
             'file' => 'required|image|mimes:jpg,jpeg,png|dimensions:width=' . $width . ',height=' . $height,
         ];

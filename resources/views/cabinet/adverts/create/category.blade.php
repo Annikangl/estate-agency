@@ -6,6 +6,6 @@
 
         <p>Выберите категорию:</p>
 
-        @include('cabinet.banners.create._categories', ['categories' => $categories])
+        @include('cabinet.adverts.create._categories', ['categories' => $categories])
     </div>
 @endsection

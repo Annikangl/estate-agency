@@ -41,6 +41,7 @@
     37 => 'App\\Providers\\SmsServiceProvider',
     38 => 'App\\Providers\\CacheServiceProvider',
     39 => 'App\\Providers\\ElasticSearchServiceProvider',
+    40 => 'App\\Providers\\BannerServiceProvider',
   ),
   'eager' => 
   array (
@@ -68,6 +69,7 @@
     21 => 'App\\Providers\\SmsServiceProvider',
     22 => 'App\\Providers\\CacheServiceProvider',
     23 => 'App\\Providers\\ElasticSearchServiceProvider',
+    24 => 'App\\Providers\\BannerServiceProvider',
   ),
   'deferred' => 
   array (

@@ -3,16 +3,16 @@
         <a href="{{ route('cabinet.home') }}" class="nav-link @if (Route::is('cabinet.home')) active @endif">Главная</a>
     </li>
     <li class="nav-item">
-        <a href="{{ route('cabinet.adverts.index') }}" class="nav-link  @if (Route::is('cabinet.adverts.index')) active @endif">Мои объявления</a>
+        <a href="{{ route('cabinet.adverts.index') }}" class="nav-link  @if (Route::is('cabinet.adverts.*')) active @endif">Мои объявления</a>
     </li>
     <li class="nav-item">
-        <a href="{{ route('cabinet.profile.home') }}" class="nav-link  @if (Route::is('cabinet.profile.home')) active @endif">Профиль</a>
+        <a href="{{ route('cabinet.profile.home') }}" class="nav-link  @if (Route::is('cabinet.profile.*')) active @endif">Профиль</a>
     </li>
     <li class="nav-item">
-        <a href="{{ route('cabinet.favorites.index') }}" class="nav-link  @if (Route::is('cabinet.favorites.index')) active @endif">Избранное</a>
+        <a href="{{ route('cabinet.favorites.index') }}" class="nav-link  @if (Route::is('cabinet.favorites.*')) active @endif">Избранное</a>
     </li>
     <li class="nav-item">
-        <a href="{{ route('cabinet.banners.index') }}" class="nav-link  @if (Route::is('cabinet.banners.index')) active @endif">Реклама</a>
+        <a href="{{ route('cabinet.banners.index') }}" class="nav-link  @if (Route::is('cabinet.banners.*')) active @endif">Реклама</a>
     </li>
 </ul>
 

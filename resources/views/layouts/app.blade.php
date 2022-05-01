@@ -95,7 +95,7 @@
     @show
 </header>
 
-<main class="app-content py-4">
+<main class="app-content py-4 container">
         @section('breadcrumbs', Breadcrumbs::render() )
         @yield('breadcrumbs')
         @include('layouts.partials.flash')

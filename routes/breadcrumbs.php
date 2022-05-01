@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Banners\Banner;
 use App\Models\Region;
 use Diglactic\Breadcrumbs\Breadcrumbs;
 use Diglactic\Breadcrumbs\Generator as BreadcrumbTrail;
@@ -68,12 +69,50 @@ Breadcrumbs::for('cabinet.adverts.photos', function (BreadcrumbTrail $trail, \Ap
     $trail->push($advert->title, route('cabinet.adverts.photos', $advert));
 });
 
-// ------------------------------- Cabinet Advert -------------------------------
+// ------------------------------- Cabinet Favorites -------------------------------
 
 Breadcrumbs::for('cabinet.favorites.index', function (BreadcrumbTrail $trail) {
     $trail->parent('cabinet.home');
     $trail->push('Избранное', route('cabinet.favorites.index'));
 });
+
+// ------------------------------- Cabinet Banners -------------------------------
+
+Breadcrumbs::for('cabinet.banners.index', function (BreadcrumbTrail $crumbs) {
+    $crumbs->parent('cabinet.home');
+    $crumbs->push('Рекламные баннеры', route('cabinet.banners.index'));
+});
+
+Breadcrumbs::for('cabinet.banners.show', function (BreadcrumbTrail $crumbs, Banner $banner) {
+    $crumbs->parent('cabinet.banners.index');
+    $crumbs->push($banner->name, route('cabinet.banners.show', $banner));
+});
+
+Breadcrumbs::for('cabinet.banners.edit', function (BreadcrumbTrail $crumbs, Banner $banner) {
+    $crumbs->parent('cabinet.banners.show', $banner);
+    $crumbs->push('Изменить', route('cabinet.banners.edit', $banner));
+});
+
+Breadcrumbs::for('cabinet.banners.file', function (BreadcrumbTrail $crumbs, Banner $banner) {
+    $crumbs->parent('cabinet.banners.show', $banner);
+    $crumbs->push('Загрузить файл', route('cabinet.banners.file', $banner));
+});
+
+Breadcrumbs::for('cabinet.banners.create', function (BreadcrumbTrail $crumbs) {
+    $crumbs->parent('cabinet.banners.index');
+    $crumbs->push('Создать', route('cabinet.banners.create'));
+});
+
+Breadcrumbs::for('cabinet.banners.create.region', function (BreadcrumbTrail $crumbs, \App\Models\Adverts\Category $category, Region $region = null) {
+    $crumbs->parent('cabinet.banners.create');
+    $crumbs->push($category->name, route('cabinet.banners.create.region', [$category, $region]));
+});
+
+Breadcrumbs::for('cabinet.banners.create.banner', function (BreadcrumbTrail $crumbs, \App\Models\Adverts\Category $category, Region $region = null) {
+    $crumbs->parent('cabinet.banners.create.region', $category, $region);
+    $crumbs->push($region ? $region->name : 'All', route('cabinet.banners.create.banner', [$category, $region]));
+});
+
 
 // ------------------------------- Admin ----------------------
 
@@ -180,6 +219,28 @@ Breadcrumbs::for('admin.advert.adverts.edit', function (BreadcrumbTrail $crumbs,
 Breadcrumbs::for('admin.advert.adverts.reject', function (BreadcrumbTrail $crumbs, \App\Models\Adverts\Advert\Advert $advert) {
     $crumbs->parent('admin.home');
     $crumbs->push($advert->title, route('admin.advert.adverts.reject', $advert));
+});
+
+// Admin -> Banners
+
+Breadcrumbs::for('admin.banners.index', function (BreadcrumbTrail $crumbs) {
+    $crumbs->parent('admin.home');
+    $crumbs->push('Рекламные баннеры', route('admin.banners.index'));
+});
+
+Breadcrumbs::for('admin.banners.show', function (BreadcrumbTrail $crumbs, Banner $banner) {
+    $crumbs->parent('admin.banners.index');
+    $crumbs->push($banner->name, route('admin.banners.show', $banner));
+});
+
+Breadcrumbs::for('admin.banners.edit', function (BreadcrumbTrail $crumbs, Banner $banner) {
+    $crumbs->parent('admin.banners.show', $banner);
+    $crumbs->push('Изменить', route('admin.banners.edit', $banner));
+});
+
+Breadcrumbs::for('admin.banners.reject', function (BreadcrumbTrail $crumbs, Banner $banner) {
+    $crumbs->parent('admin.banners.show', $banner);
+    $crumbs->push('Отклонить', route('admin.banners.reject', $banner));
 });
 
 // ------------------------------- Adverts -------------------------------

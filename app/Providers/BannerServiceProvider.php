@@ -6,7 +6,7 @@ use App\Http\Services\Banner\CostCalculator;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
 
-class BannererviceProvider extends ServiceProvider
+class BannerServiceProvider extends ServiceProvider
 {
     /**
      * Register services.

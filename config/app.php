@@ -179,6 +179,7 @@ return [
         App\Providers\SmsServiceProvider::class,
         \App\Providers\CacheServiceProvider::class,
         \App\Providers\ElasticSearchServiceProvider::class,
+        \App\Providers\BannerServiceProvider::class,
 
     ],
 
