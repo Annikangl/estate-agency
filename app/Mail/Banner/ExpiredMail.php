@@ -2,6 +2,7 @@
 
 namespace App\Mail\Banner;
 
+use App\Models\Banners\Banner;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -16,9 +17,11 @@ class ExpiredMail extends Mailable
      *
      * @return void
      */
-    public function __construct()
+    public $banner;
+
+    public function __construct(Banner $banner)
     {
-        //
+        $this->banner = $banner;
     }
 
     /**

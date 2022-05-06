@@ -2,22 +2,25 @@
 
 namespace App\Console\Commands\Banner;
 
-use App\Http\Services\Advert\AdvertService;
-use App\Http\Services\Banner\BannerService;
 use App\Mail\Banner\ExpiredMail;
-use App\Models\Adverts\Advert\Advert;
 use App\Models\Banners\Banner;
-use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Database\Query\Expression;
 use Illuminate\Support\Facades\Mail;
+use Predis\Client;
 
 class ExpiredBanner extends Command
 {
 
     protected $signature = 'banners:expire';
-
     protected $description = 'Command description';
+    protected $client;
+
+    public function __construct(Client $client)
+    {
+        parent::__construct();
+        $this->client = $client;
+    }
 
 
     public function handle()
@@ -30,7 +33,9 @@ class ExpiredBanner extends Command
         foreach (Banner::active()->where(new Expression('`limit` - views'), '<', 100)
                      ->with('users')->cursor() as $banner)
         {
-            Mail::to($banner->user->email)->send(ExpiredMail::class);
+            $key = 'banner_notify_' . $banner->id;
+            if ($this->client->get($key)) continue;
+            Mail::to($banner->user->email)->queue(new ExpiredMail($banner));
         }
 
         return $success;
