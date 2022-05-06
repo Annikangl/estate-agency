@@ -69,7 +69,7 @@ class BannerController extends Controller
             return back()->with('error', $exception->getMessage());
         }
 
-        return view('admin.banners.show', $banner);
+        return redirect()->route('admin.banners.show', $banner);
     }
 
     public function moderate(Banner $banner)
@@ -80,7 +80,7 @@ class BannerController extends Controller
             return back()->with('error', $exception->getMessage());
         }
 
-        return view('admin.banners.show', $banner);
+        return redirect()->route('admin.banners.show', $banner);
     }
 
     public function rejectForm(Banner $banner)
@@ -96,7 +96,7 @@ class BannerController extends Controller
             return back()->with('error', $exception->getMessage());
         }
 
-        return view('admin.banners.show', $banner);
+        return redirect()->route('admin.banners.show', $banner);
     }
 
     public function markAsPayed(Banner $banner)
@@ -107,7 +107,7 @@ class BannerController extends Controller
             return back()->with('error', $exception->getMessage());
         }
 
-        return view('admin.banners.show', $banner);
+        return redirect()->route('admin.banners.show', $banner);
     }
 
     public function destroy(Banner $banner)
@@ -118,6 +118,6 @@ class BannerController extends Controller
             return back()->with('error', $exception->getMessage());
         }
 
-        return view('admin.banners.index', $banner);
+        return redirect()->route('admin.banners.index');
     }
 }

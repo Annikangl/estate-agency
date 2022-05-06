@@ -20,6 +20,9 @@ Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'])->name('h
 
 Auth::routes();
 
+Route::get('/banner/get', [\App\Http\Controllers\BannerController::class, 'get'])->name('banner.get');
+Route::get('/banner/{banner}/click', [\App\Http\Controllers\BannerController::class, 'click'])->name('banner.click');
+
 // frontend pages
 Route::group(['prefix' => 'adverts', 'as'=>'adverts.'], function () {
    Route::get('/show/{advert}', [AdvertController::class, 'show'])->name('show');
@@ -157,7 +160,7 @@ Route::group(
             Route::get('/{banner}/reject', [\App\Http\Controllers\Admin\BannerController::class, 'rejectForm'])->name('reject');
             Route::post('/{banner}/reject', [\App\Http\Controllers\Admin\BannerController::class, 'reject']);
             Route::post('/{banner}/pay', [\App\Http\Controllers\Admin\BannerController::class, 'markAsPayed'])->name('pay');
-            Route::delete('/{delete}/destroy', [\App\Http\Controllers\Admin\BannerController::class, 'destroy'])->name('destroy');
+            Route::delete('/{banner}/destroy', [\App\Http\Controllers\Admin\BannerController::class, 'destroy'])->name('destroy');
         });
 
     });

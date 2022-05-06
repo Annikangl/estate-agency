@@ -75,7 +75,7 @@
             @foreach ($banners as $banner)
                 <tr>
                     <td>{{ $banner->id }}</td>
-                    <td><a href="{{ route('cabinet.banners.show', $banner) }}" target="_blank">{{ $banner->name }}</a>
+                    <td><a href="{{ route('admin.banners.show', $banner) }}" target="_blank">{{ $banner->name }}</a>
                     </td>
                     <td>{{ $banner->user->id }} - {{ $banner->user->name }}</td>
                     <td>

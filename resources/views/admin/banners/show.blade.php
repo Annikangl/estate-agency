@@ -11,8 +11,9 @@
             @if ($banner->isOnModeration())
                 <form method="POST" action="{{ route('admin.banners.moderate', $banner) }}" class="mr-1">
                     @csrf
-                    <button class="btn btn-success">На проверку</button>
+                    <button class="btn btn-success">Отправить на оплату</button>
                 </form>
+                <a href="{{ route('admin.banners.reject', $banner) }}" class="btn btn-warning">Отклонить</a>
             @endif
 
             @if ($banner->isOrdered())
@@ -21,6 +22,7 @@
                     <button class="btn btn-success">Пометить как оплаченный</button>
                 </form>
             @endif
+
 
             <form method="POST" action="{{ route('admin.banners.destroy', $banner) }}" class="mr-1">
                 @csrf

@@ -1,14 +1,13 @@
 require('./bootstrap');
 
 // core version + navigation, pagination modules:
-import Swiper, { Navigation, Pagination } from 'swiper';
+import Swiper, {Navigation, Pagination} from 'swiper';
 // import Swiper and modules styles
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
-$(document).ready(function(){
-    console.log('1');
+$(document).ready(function () {
 
 });
 
@@ -21,7 +20,6 @@ $(document).on('click', '.phone-button', function () {
         console.log(reason);
     });
 });
-
 
 
 const swiper = new Swiper('.swiper', {
@@ -45,5 +43,30 @@ const swiper = new Swiper('.swiper', {
     }
 
 });
+
+$('.banner').each(function () {
+    let block = $(this);
+
+    let url = block.data('url');
+    let format = block.data('format');
+    let category = block.data('category');
+    let region = block.data('region');
+
+    axios.get(url, {
+        params: {
+            format: format,
+            category: category,
+            region: region
+        }
+    }).then(function (response) {
+        console.log(response);
+        block.html(response.data);
+    })
+        .catch(function (error) {
+            console.error(error);
+        })
+
+
+})
 
 

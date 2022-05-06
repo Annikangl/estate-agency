@@ -22,7 +22,7 @@ class AdvertController extends Controller
 
     public function index(SearchRequest $request, Region $region = null, Category $category = null)
     {
-        $result = $this->search->search($category, $region, $request,20, $request->get('page', 1));
+        $result = $this->search->search($category, $region, $request, 20, $request->get('page', 1));
 
         $adverts = $result->adverts;
         $regionCount = $result->regionsCount;
@@ -45,11 +45,10 @@ class AdvertController extends Controller
         });
 
 
-
         return view('adverts.index',
-            compact('category','region',
+            compact('category', 'region',
                 'categories', 'regions',
-                'regionCount','categoryCount',
+                'regionCount', 'categoryCount',
                 'adverts'));
     }
 
@@ -60,7 +59,7 @@ class AdvertController extends Controller
 //            abort(403);
 //        }
 
-        return view('adverts.show', compact('advert','user'));
+        return view('adverts.show', compact('advert', 'user'));
     }
 
     public function phone(Advert $advert): string

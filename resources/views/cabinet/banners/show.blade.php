@@ -28,7 +28,7 @@
             @if ($banner->isModerated())
                 <form method="POST" action="{{ route('cabinet.banners.order', $banner) }}" class="mr-1">
                     @csrf
-                    <button class="btn btn-success">Order for Payment</button>
+                    <button class="btn btn-success">Подготовить к оплате</button>
                 </form>
             @endif
 

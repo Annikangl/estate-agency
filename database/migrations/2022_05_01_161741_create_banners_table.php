@@ -18,7 +18,7 @@ return new class extends Migration
 
             $table->integer('user_id')->references('id')->on('users')->onDelete('CASCADE');
             $table->integer('category_id')->references('id')->on('advert_categories');
-            $table->integer('region_id')->references('id')->on('region');
+            $table->integer('region_id')->references('id')->on('region')->nullable();
             $table->string('name');
             $table->integer('views')->nullable();
             $table->integer('limit');

@@ -4,6 +4,7 @@ namespace App\Console\Commands\Search;
 
 use App\Models\Adverts\Advert\Advert;
 use Elasticsearch\Client;
+use Elasticsearch\Common\Exceptions\Missing404Exception;
 use Illuminate\Console\Command;
 
 class InitCommand extends Command
@@ -23,6 +24,13 @@ class InitCommand extends Command
 
 //    Удаляем индекс если существует и создаем новый
     public function handle()
+    {
+        $this->initAdverts();
+        $this->initBanners();
+        return 0;
+    }
+
+    private function initAdverts()
     {
         try {
             $this->client->indices()->delete([
@@ -112,7 +120,44 @@ class InitCommand extends Command
                 ],
             ],
         ]);
+    }
 
-        return 0;
+    private function initBanners()
+    {
+        try {
+            $this->client->indices()->delete([
+                'index' => 'banners'
+            ]);
+        } catch (Missing404Exception $exception) {}
+
+        $this->client->indices()->create([
+            'index' => 'banners',
+            'body' => [
+                'mappings' => [
+                    'banner' => [
+                        '_source' => [
+                            'enabled' => true,
+                        ],
+                        'properties' => [
+                            'id' => [
+                                'type' => 'integer',
+                            ],
+                            'status' => [
+                                'type' => 'keyword',
+                            ],
+                            'format' => [
+                                'type' => 'keyword',
+                            ],
+                            'categories' => [
+                                'type' => 'integer',
+                            ],
+                            'regions' => [
+                                'type' => 'integer',
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
     }
 }

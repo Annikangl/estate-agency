@@ -74,6 +74,25 @@ class Banner extends Model
         ];
     }
 
+    public function view(): void
+    {
+        $this->assetIsActive();
+        $this->increment('views');
+
+        if ($this->views >= $this->limit) {
+            $this->status = self::STATUS_CLOSED;
+        }
+
+        $this->save();
+    }
+
+    public function click(): void
+    {
+        $this->assetIsActive();
+        $this->increment('clicks');
+        $this->save();
+    }
+
     public function sendToModeration(): void
     {
         if (!$this->isDraft()) {
@@ -129,7 +148,7 @@ class Banner extends Model
 
     public function pay(\Carbon\Carbon $date)
     {
-        if (!$this->isModerated()) {
+        if (!$this->isOrdered()) {
             throw new \DomainException('Баннер еще не одобрен');
         }
 
@@ -162,6 +181,11 @@ class Banner extends Model
     public function isDraft(): bool
     {
         return self::STATUS_DRAFT === $this->status;
+    }
+
+    public function isOrdered(): bool
+    {
+        return $this->status === self::STATUS_ORDERED;
     }
 
     public function isActive(): bool
@@ -202,5 +226,12 @@ class Banner extends Model
     public static function scopeActive(Builder $query): Builder
     {
         return $query->where('status', self::STATUS_ACTIVE);
+    }
+
+    private function assetIsActive(): void
+    {
+        if (!$this->isActive()) {
+            throw new \DomainException('Banner is not active.');
+        }
     }
 }

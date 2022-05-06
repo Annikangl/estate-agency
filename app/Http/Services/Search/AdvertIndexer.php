@@ -21,8 +21,8 @@ class AdvertIndexer
     {
 //        new stdClass - прост опустой объект {} для правильной сериализации в JSON
         $this->client->deleteByQuery([
-            'index' => 'agency',
-            'type' => 'adverts',
+            'index' => 'adverts',
+            'type' => 'advert',
             'body' => [
                 'query' => [
                     'match_all' => new \stdClass()
@@ -42,8 +42,8 @@ class AdvertIndexer
         }
 
         $this->client->index([
-            'index' => 'agency',
-            'type' => 'adverts',
+            'index' => 'adverts',
+            'type' => 'advert',
             'id' => $advert->id,
             'body' => [
                 'id' => $advert->id,
@@ -54,7 +54,7 @@ class AdvertIndexer
                 'status' => $advert->status,
                 'categories' => array_merge(
                     [$advert->category->id],
-                    $advert->category->descendants()->pluck('id')->toArray()),
+                    $advert->category->ancestors()->pluck('id')->toArray()),
                 'regions' => $regions ?: [0],
                 'values' => array_map(function (Value $value) {
                     return [
@@ -70,8 +70,8 @@ class AdvertIndexer
     public function remove(Advert $advert)
     {
         $this->client->delete([
-            'index' => 'agency',
-            'type' => 'adverts',
+            'index' => 'adverts',
+            'type' => 'advert',
             'id' => $advert->id
         ]);
     }
