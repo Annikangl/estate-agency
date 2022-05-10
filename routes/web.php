@@ -20,6 +20,11 @@ Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'])->name('h
 
 Auth::routes();
 
+Route::get('login/facebook', [\App\Http\Controllers\Auth\Networks\FacebookController::class, 'redirect'])->name('auth.facebook');
+Route::get('login/facebook/callback', [\App\Http\Controllers\Auth\Networks\FacebookController::class, 'callback']);
+Route::get('login/vk', [\App\Http\Controllers\Auth\Networks\VkController::class, 'redirect'])->name('auth.vk');
+Route::get('login/vk/callback', [\App\Http\Controllers\Auth\Networks\VkController::class, 'callback']);
+
 Route::get('/banner/get', [\App\Http\Controllers\BannerController::class, 'get'])->name('banner.get');
 Route::get('/banner/{banner}/click', [\App\Http\Controllers\BannerController::class, 'click'])->name('banner.click');
 

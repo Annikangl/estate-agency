@@ -72,6 +72,13 @@
                                 </div>
                             </div>
                         </form>
+
+                        <div class="row mt-3">
+                            <div class="networks text-center">
+{{--                                <a href="{{ route('auth.facebook') }}"> <span class="fa fa-facebook-square fs-2"></span></a>--}}
+                                <a href="{{ route('auth.vk') }}">VK auth</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

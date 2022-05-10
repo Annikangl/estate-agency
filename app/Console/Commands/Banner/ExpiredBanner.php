@@ -14,7 +14,7 @@ class ExpiredBanner extends Command
 
     protected $signature = 'banners:expire';
     protected $description = 'Command description';
-    protected $client;
+    protected Client $client;
 
     public function __construct(Client $client)
     {

@@ -1,7 +1,9 @@
 <?php
 
+use App\Models\Adverts\Advert\Advert;
 use App\Models\Banners\Banner;
 use App\Models\Region;
+use App\Models\User;
 use Diglactic\Breadcrumbs\Breadcrumbs;
 use Diglactic\Breadcrumbs\Generator as BreadcrumbTrail;
 
@@ -64,7 +66,7 @@ Breadcrumbs::for('cabinet.adverts.create.advert', function (BreadcrumbTrail $tra
     $trail->push($region ? $region->name : 'Все', route('cabinet.adverts.create.advert', [$category,$region]));
 });
 
-Breadcrumbs::for('cabinet.adverts.photos', function (BreadcrumbTrail $trail, \App\Models\Adverts\Advert\Advert $advert) {
+Breadcrumbs::for('cabinet.adverts.photos', function (BreadcrumbTrail $trail, Advert $advert) {
     $trail->parent('cabinet.adverts.create');
     $trail->push($advert->title, route('cabinet.adverts.photos', $advert));
 });
@@ -129,11 +131,11 @@ Breadcrumbs::for('admin.users.create', function (BreadcrumbTrail $trailt) {
     $trailt->parent('admin.users.index');
     $trailt->push('Создать', route('admin.users.create'));
 });
-Breadcrumbs::for('admin.users.show', function (BreadcrumbTrail $trailt, \App\Models\User $user) {
+Breadcrumbs::for('admin.users.show', function (BreadcrumbTrail $trailt, User $user) {
     $trailt->parent('admin.users.index');
     $trailt->push($user->name, route('admin.users.show', $user));
 });
-Breadcrumbs::for('admin.users.edit', function (BreadcrumbTrail $trailt, \App\Models\User $user) {
+Breadcrumbs::for('admin.users.edit', function (BreadcrumbTrail $trailt, User $user) {
     $trailt->parent('admin.users.index');
     $trailt->push($user->name, route('admin.users.edit', $user));
 });
@@ -211,12 +213,12 @@ Breadcrumbs::for('admin.advert.adverts.index', function (BreadcrumbTrail $crumbs
     $crumbs->push('Объявление', route('admin.advert.adverts.index'));
 });
 
-Breadcrumbs::for('admin.advert.adverts.edit', function (BreadcrumbTrail $crumbs, \App\Models\Adverts\Advert\Advert $advert) {
+Breadcrumbs::for('admin.advert.adverts.edit', function (BreadcrumbTrail $crumbs, Advert $advert) {
     $crumbs->parent('admin.home');
     $crumbs->push($advert->title, route('admin.advert.adverts.edit', $advert));
 });
 
-Breadcrumbs::for('admin.advert.adverts.reject', function (BreadcrumbTrail $crumbs, \App\Models\Adverts\Advert\Advert $advert) {
+Breadcrumbs::for('admin.advert.adverts.reject', function (BreadcrumbTrail $crumbs, Advert $advert) {
     $crumbs->parent('admin.home');
     $crumbs->push($advert->title, route('admin.advert.adverts.reject', $advert));
 });
@@ -276,7 +278,7 @@ Breadcrumbs::for('adverts.index.all', function (BreadcrumbTrail $trail, Region $
     $trail->parent('adverts.index', $region, $category);
 });
 
-Breadcrumbs::for('adverts.show', function (BreadcrumbTrail $trail, \App\Models\Adverts\Advert\Advert $advert) {
+Breadcrumbs::for('adverts.show', function (BreadcrumbTrail $trail, Advert $advert) {
     $trail->parent('adverts.index', $advert->region, $advert->category);
     $trail->push($advert->title, route('adverts.show', $advert));
 });

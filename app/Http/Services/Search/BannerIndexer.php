@@ -3,9 +3,6 @@
 
 namespace App\Http\Services\Search;
 
-
-use App\Models\Adverts\Advert\Advert;
-use App\Models\Adverts\Advert\Value;
 use App\Models\Banners\Banner;
 use App\Models\Region;
 use Elasticsearch\Client;

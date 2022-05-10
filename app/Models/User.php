@@ -3,11 +3,12 @@
 namespace App\Models;
 
 use App\Models\Adverts\Advert\Advert;
+use App\Models\User\Network;
 use Carbon\Carbon;
 use http\Exception\InvalidArgumentException;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
@@ -94,6 +95,25 @@ class User extends Authenticatable
             'status' => self::STATUS_WAIT,
             'role' => self::ROLE_USER
         ]);
+    }
+
+    public static function registerByNetwork(string $network, string $identity): self
+    {
+        $user = static::create([
+            'name' => $identity,
+            'email' => null,
+            'password' => null,
+            'verify_code' => null,
+            'status' => self::STATUS_ACTIVE,
+            'role' => self::ROLE_USER
+        ]);
+
+        $user->networks()->create([
+            'network' => $network,
+            'identity' => $identity
+        ]);
+
+        return $user;
     }
 
     public static function new($name, $email): self
@@ -215,9 +235,14 @@ class User extends Authenticatable
         return true;
     }
 
-    public function favorites()
+    public function favorites(): BelongsToMany
     {
         return $this->belongsToMany(Advert::class, 'advert_favorites','user_id','advert_id');
+    }
+
+    public function networks(): BelongsToMany
+    {
+        return $this->belongsToMany(Network::class, 'user_id', 'id');
     }
 
     public function addToFavorite($advertId)
@@ -236,5 +261,12 @@ class User extends Authenticatable
     public function removeFromFavorites($advertId)
     {
         $this->favorites()->detach($advertId);
+    }
+
+    public function scropebyNetwork(Builder $query, $network, $identity)
+    {
+        return $query->whereHas('networks', function (Builder $query) use ($network, $identity) {
+           $query->where('network', $network)->where('identity', $identity);
+        });
     }
 }
