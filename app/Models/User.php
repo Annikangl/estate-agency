@@ -9,6 +9,7 @@ use http\Exception\InvalidArgumentException;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
@@ -240,9 +241,9 @@ class User extends Authenticatable
         return $this->belongsToMany(Advert::class, 'advert_favorites','user_id','advert_id');
     }
 
-    public function networks(): BelongsToMany
+    public function networks(): HasMany
     {
-        return $this->belongsToMany(Network::class, 'user_id', 'id');
+        return $this->hasMany(Network::class, 'user_id', 'id');
     }
 
     public function addToFavorite($advertId)
@@ -263,10 +264,10 @@ class User extends Authenticatable
         $this->favorites()->detach($advertId);
     }
 
-    public function scropebyNetwork(Builder $query, $network, $identity)
+    public function scopeByNetwork(Builder $query, string $network, string $identity): Builder
     {
-        return $query->whereHas('networks', function (Builder $query) use ($network, $identity) {
-           $query->where('network', $network)->where('identity', $identity);
+        return $query->whereHas('networks', function(Builder $query) use ($network, $identity) {
+            $query->where('network', $network)->where('identity', $identity);
         });
     }
 }

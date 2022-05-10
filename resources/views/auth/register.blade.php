@@ -80,6 +80,12 @@
                                 </div>
                             </div>
                         </form>
+                        <div class="row mt-3">
+                            <div class="networks text-center">
+                                {{--                                <a href="{{ route('auth.facebook') }}"> <span class="fa fa-facebook-square fs-2"></span></a>--}}
+                                <a href="{{ route('auth.vk') }}"><img src="{{ asset('assets/icons/vk.svg') }}" alt="VK" width="50"></a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
