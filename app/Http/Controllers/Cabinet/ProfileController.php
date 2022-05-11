@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Cabinet;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Profile\EditRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -23,14 +24,8 @@ class ProfileController extends Controller
         return view('cabinet.profile.edit', compact('user'));
     }
 
-    public function update(Request $request)
+    public function update(EditRequest $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'last_name' => 'required|string|max:255',
-            'phone' => 'required|string|max:25',
-        ]);
-
         $user = Auth::user();
 
         $oldPhone = $user->phone;
