@@ -74,8 +74,11 @@
                         </form>
 
                         <div class="row mt-3">
+                            <hr>
                             <div class="networks text-center">
+                                <span>Или войдите через: &nbsp;</span>
                                 <a href="{{ route('auth.vk') }}"><img src="{{ asset('assets/icons/vk.svg') }}" alt="VK" width="35"></a>
+{{--                                <a href="{{ route('auth.twitter') }}"><img src="{{ asset('assets/icons/twitter.png') }}" alt="Twitter" width="35"></a>--}}
                             </div>
                         </div>
                     </div>

@@ -13,7 +13,7 @@
                             @csrf
 
                             <div class="row mb-3">
-                                <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Name') }}</label>
+                                <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Имя') }}</label>
 
                                 <div class="col-md-6">
                                     <input id="name" type="text"
@@ -30,7 +30,7 @@
 
                             <div class="row mb-3">
                                 <label for="email"
-                                       class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
+                                       class="col-md-4 col-form-label text-md-end">{{ __('Адрес эл.почты') }}</label>
 
                                 <div class="col-md-6">
                                     <input id="email" type="email"
@@ -47,7 +47,7 @@
 
                             <div class="row mb-3">
                                 <label for="password"
-                                       class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
+                                       class="col-md-4 col-form-label text-md-end">{{ __('Пароль') }}</label>
 
                                 <div class="col-md-6">
                                     <input id="password" type="password"
@@ -64,7 +64,7 @@
 
                             <div class="row mb-3">
                                 <label for="password-confirm"
-                                       class="col-md-4 col-form-label text-md-end">{{ __('Confirm Password') }}</label>
+                                       class="col-md-4 col-form-label text-md-end">{{ __('Повторите пароль') }}</label>
 
                                 <div class="col-md-6">
                                     <input id="password-confirm" type="password" class="form-control"
@@ -81,9 +81,10 @@
                             </div>
                         </form>
                         <div class="row mt-3">
+                            <hr>
                             <div class="networks text-center">
-                                {{--                                <a href="{{ route('auth.facebook') }}"> <span class="fa fa-facebook-square fs-2"></span></a>--}}
-                                <a href="{{ route('auth.vk') }}"><img src="{{ asset('assets/icons/vk.svg') }}" alt="VK" width="50"></a>
+                                <span>Или зарегистрируйтесь через: &nbsp;</span>
+                                <a href="{{ route('auth.vk') }}"><img src="{{ asset('assets/icons/vk.svg') }}" alt="VK" width="35"></a>
                             </div>
                         </div>
                     </div>
