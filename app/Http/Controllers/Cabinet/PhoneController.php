@@ -3,17 +3,21 @@
 namespace App\Http\Controllers\Cabinet;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Profile\SmsTokenRequest;
+use App\Http\Services\Profile\PhoneService;
+use App\Http\Services\Profile\ProfileService;
 use Carbon\Carbon;
 use App\Http\Services\Sms\SmsSender;
 use Illuminate\Http\Request;
 
 class PhoneController extends Controller
 {
+    private PhoneService $phoneService;
+    private SmsSender $sms;
 
-    private $sms;
-
-    public function __construct(SmsSender $sms)
+    public function __construct(PhoneService $phoneService, SmsSender $sms)
     {
+        $this->phoneService = $phoneService;
         $this->sms = $sms;
     }
 
@@ -38,16 +42,10 @@ class PhoneController extends Controller
         return view('cabinet.profile.phone', compact('user'));
     }
 
-    public function verify(Request $request)
+    public function verify(SmsTokenRequest $request)
     {
-        $request->validate([
-            'sms-token' => 'required|string|max:15'
-        ]);
-
-        $user = \Auth::user();
-
         try {
-            $user->verifyPhone($request['sms-token'], Carbon::now());
+            $this->phoneService->verifyPhone($request, \Auth::user(), Carbon::now());
         } catch (\DomainException $exception) {
             return redirect()->route('cabinet.profile.phone')->with('error', $exception->getMessage());
         }

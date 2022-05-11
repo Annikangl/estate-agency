@@ -15,6 +15,4 @@ use Illuminate\Support\Facades\Route;
 */
 Route::post('/register', [\App\Http\Controllers\Api\Auth\RegisterController::class, 'register']);
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::middleware('auth:sanctum')->get('/user', [\App\Http\Controllers\Api\User\ProfileController::class, 'show']);
