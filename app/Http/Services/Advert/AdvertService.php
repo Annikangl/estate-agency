@@ -13,6 +13,7 @@ use App\Models\Adverts\Category;
 use App\Models\Region;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 
 class AdvertService
 {
@@ -63,7 +64,7 @@ class AdvertService
         });
     }
 
-    public function edit($id, \Request $request)
+    public function edit(Request $request, $id)
     {
         $advert = $this->getAdvert($id);
         $old = $advert->price;

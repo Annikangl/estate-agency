@@ -56,6 +56,11 @@ Breadcrumbs::for('cabinet.adverts.create', function (BreadcrumbTrail $trail) {
     $trail->push('Создать', route('cabinet.adverts.create'));
 });
 
+Breadcrumbs::for('cabinet.adverts.edit', function (BreadcrumbTrail $trail, Advert $advert) {
+    $trail->parent('adverts.index');
+    $trail->push('Редактировать', route('cabinet.adverts.edit', $advert));
+});
+
 Breadcrumbs::for('cabinet.adverts.create.region', function (BreadcrumbTrail $trail, \App\Models\Adverts\Category $category, Region $region = null) {
     $trail->parent('cabinet.adverts.create');
     $trail->push($category->name, route('cabinet.adverts.create.region', [$category, $region]));

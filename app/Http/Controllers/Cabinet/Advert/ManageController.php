@@ -9,6 +9,7 @@ use App\Http\Requests\Adverts\PhotosRequest;
 use App\Http\Requests\Adverts\RejectRequest;
 use App\Http\Services\Advert\AdvertService;
 use App\Models\Adverts\Advert\Advert;
+use Illuminate\Http\Request;
 
 class ManageController extends Controller
 {
@@ -26,11 +27,11 @@ class ManageController extends Controller
         return view('adverts.edit.edit', compact('advert'));
     }
 
-    public function edit(\Request $request, Advert $advert)
+    public function update(Request $request, Advert $advert)
     {
         $this->checkAccess($advert);
         try {
-            $this->advertService->edit($advert->id, $request);
+            $this->advertService->edit($request,$advert->id);
         } catch (\DomainException $e) {
             return back()->with('error', $e->getMessage());
         }
