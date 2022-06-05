@@ -148,5 +148,6 @@
     </div>
 </footer>
 <!-- /Footer -->
+@yield('scripts')
 </body>
 </html>

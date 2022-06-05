@@ -63,7 +63,7 @@
     <div class="row">
         <div class="col-md-9">
 
-            <p class="float-end" style="font-size: 36px;">{{ $advert->price }} </p>
+            <p class="float-end" style="font-size: 36px;">{{ $advert->price }} руб.</p>
             <h1 style="margin-bottom: 10px;">{{ $advert->title }}</h1>
             <p>
                 Дата размещения: {{ $advert->created_at }}
@@ -91,38 +91,8 @@
 
             <p>Адрес: {{ $advert->address }}</p>
 
-            <div id="map" style="">
-                <script src="//api-maps.yandex.ru/2.0-stable/?load=package.standard&lang=ru-RU"
-                        type="text/javascript"></script>
-
-                <script type='text/javascript'>
-                    ymaps.ready(init);
-
-                    function init() {
-                        var geocoder = new ymaps.geocode(
-                            '{{ $advert->address }}',
-                            {results: 1}
-                        );
-                        geocoder.then(
-                            function (res) {
-                                var coord = res.geoObjects.get(0).geometry.getCoordinates();
-                                var map = new ymaps.Map('map', {
-                                    center: coord,
-                                    zoom: 7,
-                                    behaviors: ['default', 'scrollZoom'],
-                                    controls: ['mapTools']
-                                });
-                                map.geoObjects.add(res.geoObjects.get(0));
-                                map.zoomRange.get(coord).then(function (range) {
-                                    map.setCenter(coord, range[1] - 1)
-                                });
-                                map.controls.add('mapTools')
-                                    .add('zoomControl')
-                                    .add('typeSelector');
-                            }
-                        );
-                    }
-                </script>
+            <div style="margin: 20px 0; border: 1px solid #ddd">
+                <div id="map" style="width: 100%; height: 250px"></div>
             </div>
 
             <p style="">Продавец: {{ $advert->user->name }}</p>
@@ -200,4 +170,38 @@
         </div>
     </div>
     </div>
+@endsection
+
+@section('scripts')
+    <script src="//api-maps.yandex.ru/2.0-stable/?load=package.standard&lang=ru-RU&apikey=74b6c04b-1a25-40a6-b89d-abb57317616a"
+            type="text/javascript"></script>
+
+    <script type='text/javascript'>
+        ymaps.ready(init);
+
+        function init() {
+            var geocoder = new ymaps.geocode(
+                '{{ $advert->address }}',
+                {results: 1}
+            );
+            geocoder.then(
+                function (res) {
+                    var coord = res.geoObjects.get(0).geometry.getCoordinates();
+                    var map = new ymaps.Map('map', {
+                        center: coord,
+                        zoom: 7,
+                        behaviors: ['default', 'scrollZoom'],
+                        controls: ['mapTools']
+                    });
+                    map.geoObjects.add(res.geoObjects.get(0));
+                    map.zoomRange.get(coord).then(function (range) {
+                        map.setCenter(coord, range[1] - 1)
+                    });
+                    map.controls.add('mapTools')
+                        .add('zoomControl')
+                        .add('typeSelector');
+                }
+            );
+        }
+    </script>
 @endsection
