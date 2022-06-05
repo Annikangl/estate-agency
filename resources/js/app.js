@@ -67,7 +67,7 @@ $('.banner').each(function () {
         })
 })
 
-$(document).on('click', '.location-button', function () {
+$(document).on('click', '.location-btn', function () {
     let button = $(this);
     let target = $(button.data('target'));
 
