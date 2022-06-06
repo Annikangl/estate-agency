@@ -12,12 +12,14 @@ use Illuminate\Database\Eloquent\Model;
  * Class Ticket
  * @package App\Models\Ticket
  * @mixin Builder
+ *
  * @property int $id
  * @property int $userId
  * @property Carbon $created_at
  * @property Carbon $updated_at
  * @property string $subject
  * @property string $content
+ * @property string $status
  *
  * @method forUser()
  */
@@ -42,6 +44,61 @@ class Ticket extends Model
         return $ticket;
     }
 
+    public function edit(string $subject, string $content): void
+    {
+        $this->update([
+            'subject' => $subject,
+            'content' => $content
+        ]);
+    }
+
+    public function approve(int $userId): void
+    {
+        if ($this->isApproved()) {
+            throw new \DomainException('Тикет уже принят');
+        }
+
+        $this->setStatus(Status::APPROVED, $userId);
+    }
+
+    public function close(int $userId): void
+    {
+        if ($this->isClosed()) {
+            throw new \DomainException('Тикет уже закрыт');
+        }
+
+        $this->setStatus(Status::CLOSED, $userId);
+    }
+
+    public function reopen(int $userId): void
+    {
+        if (!$this->isClosed()) {
+            throw new \DomainException('Тикет не закрыт');
+        }
+
+        $this->setStatus(Status::APPROVED, $userId);
+    }
+
+    public function canBeRemoved(): bool
+    {
+        return $this->isOpen();
+    }
+
+    public function isOpen(): bool
+    {
+        return $this->status === Status::OPEN;
+    }
+
+    public function isApproved(): bool
+    {
+        return $this->status === Status::APPROVED;
+    }
+
+    public function isClosed(): bool
+    {
+        return $this->status === Status::CLOSED;
+    }
+
     private function setStatus($status, ?int $user_id): void
     {
         $this->statuses()->create([
@@ -50,6 +107,11 @@ class Ticket extends Model
         ]);
 
         $this->update(['status' => $status]);
+    }
+
+    public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
     public function statuses(): \Illuminate\Database\Eloquent\Relations\HasMany
