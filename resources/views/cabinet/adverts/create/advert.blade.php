@@ -14,7 +14,7 @@
                         <div class="col-md-6">
 
                             <div class="form-group">
-                                <label for="title">Заголовок</label>
+                                <label for="title">Заголовокк</label>
                                 <input type="text" name="title"
                                        class="form-control {{ $errors->has('title') ? ' is-invalid' : '' }}"
                                        value="{{ old('title') }}" required>
@@ -36,14 +36,25 @@
                         </div>
                     </div>
 
+
                     <div class="form-group">
                         <label for="price">Адрес</label>
-                        <input type="text" id="address" name="address"
-                               class="form-control {{ $errors->has('address') ? ' is-invalid' : '' }}"
-                               value="{{ old('address') }}" required>
-                        @if ($errors->has('address'))
-                            <span class="invalid-feedback"><strong>{{ $errors->first('address') }}</strong></span>
-                        @endif
+                        <div class="row">
+                            <div class="col-md-11">
+                                <input type="text" id="address" name="address"
+                                       class="form-control {{ $errors->has('address') ? ' is-invalid' : '' }}"
+                                       value="{{ old('address') }}" required>
+                                @if ($errors->has('address'))
+                                    <span class="invalid-feedback"><strong>{{ $errors->first('address') }}</strong></span>
+                                @endif
+                            </div>
+                            <div class="col-md-1">
+                                <span class="btn btn-primary btn-block location-btn" data-target="#address">
+                                    <span class="fa fa-location-arrow"></span>
+                                </span>
+                            </div>
+                        </div>
+
                     </div>
 
                     <div class="form-group">
@@ -58,49 +69,47 @@
                 </div>
             </div>
 
-            <div class="card mb-3">
-                <div class="card-header">
-                    Характеристики
-                </div>
-                <div class="card-body pb-2">
-                    @foreach($category->allAttributes() as $attribute)
+{{--            <div class="card mb-3">--}}
+{{--                <div class="card-header">--}}
+{{--                    Характеристики--}}
+{{--                </div>--}}
+{{--                <div class="card-body pb-2">--}}
+{{--                    @foreach($category->allAttributes() as $attribute)--}}
+{{--                        <div class="form-group">--}}
+{{--                            <label for="attribute_{{ $attribute->id}}"--}}
+{{--                                   class="col-form-label">{{ $attribute->name }}</label>--}}
+{{--                            @if ($attribute->isSelect())--}}
+{{--                                <select name="attributes_[{{ $attribute->id }}]" id="attribute_{{ $attribute->id }}"--}}
+{{--                                        class="form-control {{ $errors->has('attributes.' . $attribute->id) ? ' is-invalid' : '' }}">--}}
+{{--                                    <option value=""></option>--}}
+{{--                                    @foreach($attribute->typesList() as $type)--}}
+{{--                                        <option--}}
+{{--                                            value="{{ $type }}" {{ $type === old('$attributes.' . $attribute->id) ? ' selected' : '' }}>--}}
+{{--                                            {{ $type }}--}}
+{{--                                        </option>--}}
+{{--                                    @endforeach--}}
+{{--                                </select>--}}
 
+{{--                            @elseif($attributes->isNumber())--}}
+{{--                                <input type="number" id="attribute_{{ $attribute->id }}"--}}
+{{--                                       name="attributes_[{{ $attribute->id }}]"--}}
+{{--                                       class="form-control {{ $errors->has('attributes.' . $attribute->id) ? ' is-invalid' : '' }}"--}}
+{{--                                       value="{{ old('$attributes' . $attribute->id) }}">--}}
+{{--                            @else--}}
+{{--                                <input type="text" id="attribute_{{ $attribute->id }}"--}}
+{{--                                       name="attributes_[{{ $attribute->id }}]"--}}
+{{--                                       class="form-control {{ $errors->has('attributes.' . $attribute->id) ? ' is-invalid' : '' }}"--}}
+{{--                                       value="{{ old('$attributes' . $attribute->id) }}">--}}
+{{--                            @endif--}}
 
-                        <div class="form-group">
-                            <label for="attribute_{{ $attribute->id}}"
-                                   class="col-form-label">{{ $attribute->name }}</label>
-                            @if ($attribute->isSelect())
-                                <select name="attributes_[{{ $attribute->id }}]" id="attribute_{{ $attribute->id }}"
-                                        class="form-control {{ $errors->has('attributes.' . $attribute->id) ? ' is-invalid' : '' }}">
-                                    <option value=""></option>
-                                    @foreach($attribute->typesList() as $type)
-                                        <option
-                                            value="{{ $type }}" {{ $type === old('$attributes.' . $attribute->id) ? ' selected' : '' }}>
-                                            {{ $type }}
-                                        </option>
-                                    @endforeach
-                                </select>
-
-                            @elseif($attributes->isNumber())
-                                <input type="number" id="attribute_{{ $attribute->id }}"
-                                       name="attributes_[{{ $attribute->id }}]"
-                                       class="form-control {{ $errors->has('attributes.' . $attribute->id) ? ' is-invalid' : '' }}"
-                                       value="{{ old('$attributes' . $attribute->id) }}">
-                            @else
-                                <input type="text" id="attribute_{{ $attribute->id }}"
-                                       name="attributes_[{{ $attribute->id }}]"
-                                       class="form-control {{ $errors->has('attributes.' . $attribute->id) ? ' is-invalid' : '' }}"
-                                       value="{{ old('$attributes' . $attribute->id) }}">
-                            @endif
-
-                            @if($errors->has('parent'))
-                                <span
-                                    class="invalid-feedback"><strong>{{ $errors->first('attributes.' . $attribute->id) }}</strong></span>
-                            @endif
-                        </div>
-                    @endforeach
-                </div>
-            </div>
+{{--                            @if($errors->has('parent'))--}}
+{{--                                <span--}}
+{{--                                    class="invalid-feedback"><strong>{{ $errors->first('attributes.' . $attribute->id) }}</strong></span>--}}
+{{--                            @endif--}}
+{{--                        </div>--}}
+{{--                    @endforeach--}}
+{{--                </div>--}}
+{{--            </div>--}}
 
             <div class="form-group">
                 <button type="submit" class="btn btn-primary">Создать объявление</button>

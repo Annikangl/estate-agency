@@ -14,5 +14,8 @@
     <li class="nav-item">
         <a href="{{ route('cabinet.banners.index') }}" class="nav-link  @if (Route::is('cabinet.banners.*')) active @endif">Реклама</a>
     </li>
+    <li class="nav-item">
+        <a href="{{ route('cabinet.tickets.index') }}" class="nav-link  @if (Route::is('cabinet.tickets.*')) active @endif">Тикеты</a>
+    </li>
 </ul>
 

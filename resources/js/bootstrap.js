@@ -3,6 +3,9 @@ window.$ = require('jquery');
 
 try {
     require('bootstrap');
+    require('summernote');
+    require('summernote/dist/summernote.css');
+    require('summernote/dist/summernote.js');
 } catch (e) {}
 
 /**
@@ -14,7 +17,6 @@ try {
 window.axios = require('axios');
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-
 
 
 
