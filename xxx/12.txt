@@ -9,4 +9,10 @@
 
 ---------------------------------------------
 
+GIT token
+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
 
+5. Переписка в объявлениях
+    Advert
+        Dialog *
+            Message *

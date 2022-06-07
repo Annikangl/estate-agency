@@ -2,6 +2,7 @@
 
 namespace App\Models\Adverts\Advert;
 
+use App\Models\Adverts\Advert\Dialog\Dialog;
 use App\Models\Adverts\Category;
 use App\Models\Region;
 use App\Models\User;
@@ -15,6 +16,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @package App\Models\Adverts
  * @mixin Builder;
+ *
  * @property int $id;
  * @property int $user_id;
  * @property int $category_id;
@@ -33,6 +35,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property Region $region
  * @property User $user
  * @property Value[] $values
+ *
  * @method Builder ForUser()
  * @method Builder ForCategory()
  * @method Builder ForRegion()
@@ -103,13 +106,68 @@ class Advert extends Model
         ]);
     }
 
-    public function expirre(): void
+    public function expire(): void
     {
         $this->update([
             'status' => self::STATUS_CLOSED,
             'expired_at' => Carbon::now()
         ]);
     }
+
+    public function writeClientMessage(int $fromId, string $message): void
+    {
+        if ($this->isDraft()) {
+            throw new \DomainException('Данное объявление закрыто');
+        }
+
+        $this->getOrCreateDialogWith($fromId)->writeMessage($fromId, $message);
+    }
+
+    public function writeOwnerMessage(int $toId, string $message): void
+    {
+        if ($this->isDraft()) {
+            throw new \DomainException('Данное объявление закрыто');
+        }
+
+        $this->getDialogWith($toId)->writeMessage($this->user_id, $message);
+    }
+
+    public function readClientMessages(int $userId): void
+    {
+        $this->getDialogWith($userId)->readByClient();
+    }
+
+    public function readOwnerMessages(int $userId): void
+    {
+        $this->getDialogWith($userId)->readByOwner();
+    }
+
+    private function getDialogWith(int $userId): Dialog
+    {
+        $dialog = $this->dialogs()->whre([
+            'user_id' => $this->user_id,
+            'client_id' => $userId
+        ])->first();
+
+        if (!$dialog) {
+            throw new \DomainException('Диалог не найден');
+        }
+
+        return $dialog;
+    }
+
+    private function getOrCreateDialogWith(int $userId): Dialog
+    {
+        if ($userId === $this->user_id) {
+            throw new \DomainException('Нельзя отправить сообщение самому себе');
+        }
+
+        return $this->dialogs()->firstOrCreate([
+            'user_id' => $this->user_id,
+            'client_id' => $userId
+        ]);
+    }
+
 
     public function isDraft(): bool
     {
@@ -151,7 +209,12 @@ class Advert extends Model
         return $this->hasMany(Photo::class,'advert_id','id');
     }
 
-    public function getValue(int $id)
+    public function dialogs()
+    {
+        return $this->hasMany(Dialog::class, 'advert_id', 'id');
+    }
+
+    public function getValue(int $id): ?string
     {
         foreach ($this->values as $value) {
             if ($value->attribute_id === $id) {

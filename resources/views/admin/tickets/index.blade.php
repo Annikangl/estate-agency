@@ -9,13 +9,13 @@
             <div class="card-body">
                 <form action="?" method="GET">
                     <div class="row">
-                        <div class="col-sm-1">
+                        <div class="col-sm-2">
                             <div class="form-group">
-                                <label for="id" class="col-form-label">ID</label>
+                                <label for="id" class="col-form-label">Идентификатор</label>
                                 <input id="id" class="form-control" name="id" value="{{ request('id') }}">
                             </div>
                         </div>
-                        <div class="col-sm-1">
+                        <div class="col-sm-2">
                             <div class="form-group">
                                 <label for="user" class="col-form-label">Пользователь</label>
                                 <input id="user" class="form-control" name="user" value="{{ request('user') }}">
