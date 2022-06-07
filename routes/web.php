@@ -56,6 +56,11 @@ Route::group(['middleware' => 'auth', 'prefix' => 'cabinet', 'as' => 'cabinet.']
     Route::get('favorites', [FavoriteController::class, 'index'])->name('favorites.index');
     Route::delete('favorites/{advert}', [FavoriteController::class, 'remove'])->name('favorites.remove');
 
+    Route::resource('tickets', \App\Http\Controllers\Cabinet\TicketController::class)
+        ->only(['index','show', 'create', 'store', 'destroy']);
+    Route::post('tickets/{ticket}/message', [\App\Http\Controllers\Cabinet\TicketController::class, 'message'])
+        ->name('tickets.message');
+
     Route::group(['prefix' => 'adverts', 'as' => 'adverts.','middleware' => \App\Http\Middleware\FilledProfile::class], function () {
         Route::get('/',[\App\Http\Controllers\Cabinet\Advert\AdvertController::class,'index'])->name('index');
         Route::get('/create', [CreateController::class,'category'])->name('create');
@@ -168,5 +173,21 @@ Route::group(
             Route::delete('/{banner}/destroy', [\App\Http\Controllers\Admin\BannerController::class, 'destroy'])->name('destroy');
         });
 
+
+        Route::group(['prefix' => 'tickets', 'as' => 'tickets.'], function () {
+            Route::get('/', [\App\Http\Controllers\Admin\TicketController::class, 'index'])->name('index');
+            Route::get('/{ticket}/show', [\App\Http\Controllers\Admin\TicketController::class, 'show'])->name('show');
+            Route::get('/{ticket}/edit', [\App\Http\Controllers\Admin\TicketController::class, 'editForm'])->name('edit');
+            Route::put('/{ticket}/edit', [\App\Http\Controllers\Admin\TicketController::class, 'edit']);
+            Route::post('{ticket}/message', [\App\Http\Controllers\Admin\TicketController::class, 'message'])->name('message');
+            Route::post('/{ticket}/close', [\App\Http\Controllers\Admin\TicketController::class, 'close'])->name('close');
+            Route::post('/{ticket}/approve', [\App\Http\Controllers\Admin\TicketController::class, 'approve'])->name('approve');
+            Route::post('/{ticket}/reopen', [\App\Http\Controllers\Admin\TicketController::class, 'reopen'])->name('reopen');
+            Route::delete('/{ticket}/destroy', [\App\Http\Controllers\Admin\TicketController::class, 'destroy'])->name('destroy');
+        });
+
     });
+
+Route::get('/{page_path}', [\App\Http\Controllers\PageController::class, 'show'])->name('page')
+    ->where('page_path', '.+');
 

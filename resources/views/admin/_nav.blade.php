@@ -40,4 +40,12 @@
             </a>
         </li>
     @endcan
+    @can('manage-tickets')
+        <li class="nav-item">
+            <a href="{{ route('admin.tickets.index') }}"
+               class="nav-link  @if (Route::is('admin.tickets.*')) active @endif">
+                Тикеты
+            </a>
+        </li>
+    @endcan
 </ul>

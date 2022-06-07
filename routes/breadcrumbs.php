@@ -130,6 +130,22 @@ Breadcrumbs::for('cabinet.banners.create.banner', function (BreadcrumbTrail $cru
 });
 
 
+// ------------------------------- Cabinet Tickets -----------------------------------------
+Breadcrumbs::for('cabinet.tickets.index', function (BreadcrumbTrail $crumbs) {
+    $crumbs->parent('cabinet.home');
+    $crumbs->push('Tickets', route('cabinet.tickets.index'));
+});
+
+Breadcrumbs::for('cabinet.tickets.create', function (BreadcrumbTrail $crumbs) {
+    $crumbs->parent('cabinet.tickets.index');
+    $crumbs->push('Create', route('cabinet.tickets.create'));
+});
+
+Breadcrumbs::for('cabinet.tickets.show', function (BreadcrumbTrail $crumbs, \App\Models\Ticket\Ticket $ticket) {
+    $crumbs->parent('cabinet.tickets.index');
+    $crumbs->push($ticket->subject, route('cabinet.tickets.show', $ticket));
+});
+
 // ------------------------------- Admin ----------------------
 
 Breadcrumbs::for('admin.home', function (BreadcrumbTrail $trailt) {
@@ -201,8 +217,6 @@ Breadcrumbs::for('admin.advert.categories.edit', function (BreadcrumbTrail $trai
 
 // Admin -> Pages
 
-// Pages
-
 Breadcrumbs::for('admin.pages.index', function (BreadcrumbTrail $crumbs) {
     $crumbs->parent('admin.home');
     $crumbs->push('Pages', route('admin.pages.index'));
@@ -225,6 +239,23 @@ Breadcrumbs::for('admin.pages.show', function (BreadcrumbTrail $crumbs, \App\Mod
 Breadcrumbs::for('admin.pages.edit', function (BreadcrumbTrail $crumbs, \App\Models\Page $page) {
     $crumbs->parent('admin.pages.show', $page);
     $crumbs->push('Edit', route('admin.pages.edit', $page));
+});
+
+// Admin -> Tickets
+
+Breadcrumbs::for('admin.tickets.index', function (BreadcrumbTrail $crumbs) {
+    $crumbs->parent('admin.home');
+    $crumbs->push('Tickets', route('admin.tickets.index'));
+});
+
+Breadcrumbs::for('admin.tickets.show', function (BreadcrumbTrail $crumbs, \App\Models\Ticket\Ticket $ticket) {
+    $crumbs->parent('admin.tickets.index');
+    $crumbs->push($ticket->subject, route('admin.tickets.show', $ticket));
+});
+
+Breadcrumbs::for('admin.tickets.edit', function (BreadcrumbTrail $crumbs, \App\Models\Ticket\Ticket $ticket) {
+    $crumbs->parent('admin.tickets.show', $ticket);
+    $crumbs->push('Edit', route('admin.tickets.edit', $ticket));
 });
 
 

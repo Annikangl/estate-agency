@@ -40,6 +40,10 @@ class AuthServiceProvider extends ServiceProvider
             return $user->isAdmin();
         });
 
+        Gate::define('manage-tickets', function (User $user) {
+            return $user->isAdmin();
+        });
+
         Gate::define('manage-regions', function (User $user) {
             return $user->isAdmin();
         });

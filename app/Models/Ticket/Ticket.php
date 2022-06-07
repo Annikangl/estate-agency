@@ -21,7 +21,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $content
  * @property string $status
  *
- * @method forUser()
+ * @method forUser(User $user)
  */
 
 class Ticket extends Model
@@ -79,6 +79,24 @@ class Ticket extends Model
         $this->setStatus(Status::APPROVED, $userId);
     }
 
+    public function addMessage(int $userId, $message): void
+    {
+        if (!$this->allowsMessages()) {
+            throw new \DomainException('Тикет закрыт для сообщений');
+        }
+        $this->messages()->create([
+            'user_id' => $userId,
+            'message' => $message
+        ]);
+//        Обновление даты updated_at
+        $this->update();
+    }
+
+    public function allowsMessages(): bool
+    {
+        return !$this->isClosed();
+    }
+
     public function canBeRemoved(): bool
     {
         return $this->isOpen();
@@ -117,6 +135,11 @@ class Ticket extends Model
     public function statuses(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Status::class, 'ticket_id', 'id');
+    }
+
+    public function messages(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Message::class, 'ticket_id', 'id');
     }
 
     public function scopeForUser(Builder $query, User $user)
