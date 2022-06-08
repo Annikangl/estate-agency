@@ -1,5 +1,6 @@
 require('./bootstrap');
 
+
 // core version + navigation, pagination modules:
 import Swiper, {Navigation, Pagination} from 'swiper';
 // import Swiper and modules styles
@@ -7,8 +8,9 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
-$(document).ready(function () {
 
+$(document).ready(function () {
+    console.log($('.summernote'))
 });
 
 $(document).on('click', '.phone-button', function () {
@@ -80,11 +82,15 @@ $(document).on('click', '.location-btn', function () {
     };
 
     if (navigator.geolocation) {
+        console.log(navigator.geolocation);
+
         navigator.geolocation.getCurrentPosition(function (position) {
             let location = position.coords.longitude + ',' + position.coords.latitude;
-            let url = 'https://geocode-maps.yandex.ru/1.x/?format=json&callback=geocode_callback&geocode=' + location;
+            let url = 'https://geocode-maps.yandex.ru/1.x/?format=json&callback=geocode_callback&apikey=74b6c04b-1a25-40a6-b89d-abb57317616a&geocode=' + location;
             let script = $('<script>').appendTo($('body'));
             script.attr('src', url);
+
+            console.log(location, url, script);
         }, function (error) {
             console.warn(error.message);
         });

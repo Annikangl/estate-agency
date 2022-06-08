@@ -1,4 +1,6 @@
 const mix = require('laravel-mix');
+let webpack = require('webpack');
+let path = require('path');
 
 /*
  |--------------------------------------------------------------------------
@@ -11,9 +13,24 @@ const mix = require('laravel-mix');
  |
  */
 
+mix.webpackConfig({
+    resolve: {
+        alias: { jQuery: path.resolve(__dirname, 'node_modules/jquery/dist/jquery.js') }
+    }
+});
+
 mix.setPublicPath('public/assets')
     .setResourceRoot('/assets/')
     .js('resources/js/app.js', 'js')
     .sass('resources/sass/app.scss', 'css')
     .version();
+
+mix.webpackConfig({
+    plugins: [
+        new webpack.IgnorePlugin({
+            resourceRegExp: /^jQuery$/
+        })
+    ]
+});
+
 

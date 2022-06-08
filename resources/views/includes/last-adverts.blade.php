@@ -3,10 +3,11 @@
     <div class="container">
         <h6 class="h6 color-primary m-0">Последние объявления</h6>
         <h1 class="h1 h1-responsive mb-4">Самое актуальное</h1>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p> <br>
+        <p>Последние добавленные объявления на площадке</p> <br>
 
         <div class="col-md-11 mx-auto text-left">
             <div class="row">
+                @foreach($recommendsAdverts as $advert):
                 <div class="col-lg-4 col-md-6 mx-auto my-3">
                     <div class="property-list shadow">
                         <div class="image">
@@ -14,12 +15,12 @@
                                  alt="">
                         </div>
                         <div class="text-right">
-                            <h4 class="h-5">10,999 руб</h4>
+                            <h4 class="h-5">{{ $advert->price }} руб</h4>
                         </div>
                         <div class="d-flex d-flex justify-content-between mb-4">
                             <div class="item">
-                                <h4 class="m-0">Place</h4>
-                                <p class="m-0">City, Country</p>
+                                <h4 class="m-0">{{ $advert->title }}</h4>
+                                <p class="m-0">{{ $advert->region->name }}</p>
                             </div>
                             <div class="item d-flex align-self-center">
                                 <i class="fa fa-bed mr-2 align-self-center"></i>
@@ -30,124 +31,125 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-6 mx-auto my-3">
-                    <div class="property-list shadow">
-                        <div class="image">
-                            <img src="https://via.placeholder.com/450"
-                                 alt="">
-                        </div>
-                        <div class="text-right">
-                            <h4 class="h-5">10,999 руб</h4>
-                        </div>
-                        <div class="d-flex d-flex justify-content-between mb-4">
-                            <div class="item">
-                                <h4 class="m-0">Place</h4>
-                                <p class="m-0">City, Country</p>
-                            </div>
-                            <div class="item d-flex align-self-center">
-                                <i class="fa fa-bed mr-2 align-self-center"></i>
-                                <span class="mr-3">5</span>
-                                <i class="fa fa-bath mr-2 align-self-center"></i>
-                                <span>3</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 max-auto my-3">
-                    <div class="property-list shadow">
-                        <div class="image">
-                            <img src="https://via.placeholder.com/450"
-                                 alt="">
-                        </div>
-                        <div class="text-right">
-                            <h4 class="h-5">10,999 руб</h4>
-                        </div>
-                        <div class="d-flex d-flex justify-content-between mb-4">
-                            <div class="item">
-                                <h4 class="m-0">Place</h4>
-                                <p class="m-0">City, Country</p>
-                            </div>
-                            <div class="item d-flex align-self-center">
-                                <i class="fa fa-bed mr-2 align-self-center"></i>
-                                <span class="mr-3">5</span>
-                                <i class="fa fa-bath mr-2 align-self-center"></i>
-                                <span>3</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 mx-auto my-3">
-                    <div class="property-list shadow">
-                        <div class="image">
-                            <img src="https://via.placeholder.com/450"
-                                 alt="">
-                        </div>
-                        <div class="text-right">
-                            <h4 class="h-5">10,999 руб</h4>
-                        </div>
-                        <div class="d-flex d-flex justify-content-between mb-4">
-                            <div class="item">
-                                <h4 class="m-0">Place</h4>
-                                <p class="m-0">City, Country</p>
-                            </div>
-                            <div class="item d-flex align-self-center">
-                                <i class="fa fa-bed mr-2 align-self-center"></i>
-                                <span class="mr-3">5</span>
-                                <i class="fa fa-bath mr-2 align-self-center"></i>
-                                <span>3</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 mx-auto my-3">
-                    <div class="property-list shadow">
-                        <div class="image">
-                            <img src="https://via.placeholder.com/450"
-                                 alt="">
-                        </div>
-                        <div class="text-right">
-                            <h4 class="h-5">10,999 руб</h4>
-                        </div>
-                        <div class="d-flex d-flex justify-content-between mb-4">
-                            <div class="item">
-                                <h4 class="m-0">Place</h4>
-                                <p class="m-0">City, Country</p>
-                            </div>
-                            <div class="item d-flex align-self-center">
-                                <i class="fa fa-bed mr-2 align-self-center"></i>
-                                <span class="mr-3">5</span>
-                                <i class="fa fa-bath mr-2 align-self-center"></i>
-                                <span>3</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 max-auto my-3">
-                    <div class="property-list shadow">
-                        <div class="image">
-                            <img src="https://via.placeholder.com/450"
-                                 alt="">
-                        </div>
-                        <div class="text-right">
-                            <h4 class="h-5">10,999 руб</h4>
-                        </div>
-                        <div class="d-flex d-flex justify-content-between mb-4">
-                            <div class="item">
-                                <h4 class="m-0">Place</h4>
-                                <p class="m-0">City, Country</p>
-                            </div>
-                            <div class="item d-flex align-self-center">
-                                <i class="fa fa-bed mr-2 align-self-center"></i>
-                                <span class="mr-3">5</span>
-                                <i class="fa fa-bath mr-2 align-self-center"></i>
-                                <span>3</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
+{{--                <div class="col-lg-4 col-md-6 mx-auto my-3">--}}
+{{--                    <div class="property-list shadow">--}}
+{{--                        <div class="image">--}}
+{{--                            <img src="https://via.placeholder.com/450"--}}
+{{--                                 alt="">--}}
+{{--                        </div>--}}
+{{--                        <div class="text-right">--}}
+{{--                            <h4 class="h-5">10,999 руб</h4>--}}
+{{--                        </div>--}}
+{{--                        <div class="d-flex d-flex justify-content-between mb-4">--}}
+{{--                            <div class="item">--}}
+{{--                                <h4 class="m-0">Place</h4>--}}
+{{--                                <p class="m-0">City, Country</p>--}}
+{{--                            </div>--}}
+{{--                            <div class="item d-flex align-self-center">--}}
+{{--                                <i class="fa fa-bed mr-2 align-self-center"></i>--}}
+{{--                                <span class="mr-3">5</span>--}}
+{{--                                <i class="fa fa-bath mr-2 align-self-center"></i>--}}
+{{--                                <span>3</span>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--                <div class="col-lg-4 col-md-6 max-auto my-3">--}}
+{{--                    <div class="property-list shadow">--}}
+{{--                        <div class="image">--}}
+{{--                            <img src="https://via.placeholder.com/450"--}}
+{{--                                 alt="">--}}
+{{--                        </div>--}}
+{{--                        <div class="text-right">--}}
+{{--                            <h4 class="h-5">10,999 руб</h4>--}}
+{{--                        </div>--}}
+{{--                        <div class="d-flex d-flex justify-content-between mb-4">--}}
+{{--                            <div class="item">--}}
+{{--                                <h4 class="m-0">Place</h4>--}}
+{{--                                <p class="m-0">City, Country</p>--}}
+{{--                            </div>--}}
+{{--                            <div class="item d-flex align-self-center">--}}
+{{--                                <i class="fa fa-bed mr-2 align-self-center"></i>--}}
+{{--                                <span class="mr-3">5</span>--}}
+{{--                                <i class="fa fa-bath mr-2 align-self-center"></i>--}}
+{{--                                <span>3</span>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--                <div class="col-lg-4 col-md-6 mx-auto my-3">--}}
+{{--                    <div class="property-list shadow">--}}
+{{--                        <div class="image">--}}
+{{--                            <img src="https://via.placeholder.com/450"--}}
+{{--                                 alt="">--}}
+{{--                        </div>--}}
+{{--                        <div class="text-right">--}}
+{{--                            <h4 class="h-5">10,999 руб</h4>--}}
+{{--                        </div>--}}
+{{--                        <div class="d-flex d-flex justify-content-between mb-4">--}}
+{{--                            <div class="item">--}}
+{{--                                <h4 class="m-0">Place</h4>--}}
+{{--                                <p class="m-0">City, Country</p>--}}
+{{--                            </div>--}}
+{{--                            <div class="item d-flex align-self-center">--}}
+{{--                                <i class="fa fa-bed mr-2 align-self-center"></i>--}}
+{{--                                <span class="mr-3">5</span>--}}
+{{--                                <i class="fa fa-bath mr-2 align-self-center"></i>--}}
+{{--                                <span>3</span>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--                <div class="col-lg-4 col-md-6 mx-auto my-3">--}}
+{{--                    <div class="property-list shadow">--}}
+{{--                        <div class="image">--}}
+{{--                            <img src="https://via.placeholder.com/450"--}}
+{{--                                 alt="">--}}
+{{--                        </div>--}}
+{{--                        <div class="text-right">--}}
+{{--                            <h4 class="h-5">10,999 руб</h4>--}}
+{{--                        </div>--}}
+{{--                        <div class="d-flex d-flex justify-content-between mb-4">--}}
+{{--                            <div class="item">--}}
+{{--                                <h4 class="m-0">Place</h4>--}}
+{{--                                <p class="m-0">City, Country</p>--}}
+{{--                            </div>--}}
+{{--                            <div class="item d-flex align-self-center">--}}
+{{--                                <i class="fa fa-bed mr-2 align-self-center"></i>--}}
+{{--                                <span class="mr-3">5</span>--}}
+{{--                                <i class="fa fa-bath mr-2 align-self-center"></i>--}}
+{{--                                <span>3</span>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--                <div class="col-lg-4 col-md-6 max-auto my-3">--}}
+{{--                    <div class="property-list shadow">--}}
+{{--                        <div class="image">--}}
+{{--                            <img src="https://via.placeholder.com/450"--}}
+{{--                                 alt="">--}}
+{{--                        </div>--}}
+{{--                        <div class="text-right">--}}
+{{--                            <h4 class="h-5">10,999 руб</h4>--}}
+{{--                        </div>--}}
+{{--                        <div class="d-flex d-flex justify-content-between mb-4">--}}
+{{--                            <div class="item">--}}
+{{--                                <h4 class="m-0">Place</h4>--}}
+{{--                                <p class="m-0">City, Country</p>--}}
+{{--                            </div>--}}
+{{--                            <div class="item d-flex align-self-center">--}}
+{{--                                <i class="fa fa-bed mr-2 align-self-center"></i>--}}
+{{--                                <span class="mr-3">5</span>--}}
+{{--                                <i class="fa fa-bath mr-2 align-self-center"></i>--}}
+{{--                                <span>3</span>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
             </div>
             <div class="my-5 text-center">
-                <button class="btn btn-theme">Все объявления</button>
+                <a href="{{ route('adverts.index') }}" class="btn btn-theme">Все объявления</a>
             </div>
         </div>
     </div>
